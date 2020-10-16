@@ -66,19 +66,19 @@ public class CannonBubble extends Ellipse{
     }
 
     public boolean testHit(GraphicsGroup bubbles){
-        if(bubbles.getElementAt(xPosition + getWidth() / 2, yPosition) != null){
+        if(bubbles.getElementAt(xPosition - 0.01, yPosition + 0.5 * getHeight()) != null){
             xVelocity = 0;
             yVelocity = 0;
             return true;
         }
 
-        if(bubbles.getElementAt(xPosition + getWidth(), yPosition) != null){
+        if(bubbles.getElementAt(xPosition + getWidth() + 0.01, yPosition + 0.5 * getHeight()) != null){
             xVelocity = 0;
             yVelocity = 0;
             return true;
         }
 
-        if(bubbles.getElementAt(xPosition + 0.5 * getWidth(), yPosition) != null){
+        if(bubbles.getElementAt(xPosition + 0.5 * getWidth(), yPosition - 0.01) != null){
             xVelocity = 0;
             yVelocity = 0;
             return true;
