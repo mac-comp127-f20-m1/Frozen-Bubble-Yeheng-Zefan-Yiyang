@@ -37,53 +37,60 @@ public class CannonBubble extends Ellipse{
         setFilled(true);
     }
 
-    public void updatePosition(double dt){
+    public void updatePosition(double dt, GraphicsGroup bubbles){
         double updateXPosition;
         double updateYPosition;
         updateXPosition = xPosition + dt * xVelocity;
         updateYPosition = yPosition + dt * yVelocity;
 
-        if (updateXPosition < 0 || updateXPosition > xMaxPosition - getWidth()){
-            xVelocity = -xVelocity;
-        }else if (updateYPosition <= 0){
-            xVelocity = 0;
-            yVelocity = 0;
-            updateYPosition = 1;
-        }else if ((updateXPosition == 0 && updateYPosition == 0) || (updateXPosition == xMaxPosition - getWidth() && updateYPosition
-         == yMaxPosition - getHeight())){
-            xVelocity = - xVelocity;
-            yVelocity = - yVelocity;
+        if (!testHit(bubbles)){
+            if (updateXPosition < 0 || updateXPosition > xMaxPosition - getWidth()){
+                xVelocity = -xVelocity;
+            }else if (updateYPosition <= 0){
+                xVelocity = 0;
+                yVelocity = 0;
+                updateYPosition = 1;
+            }else if ((updateXPosition == 0 && updateYPosition == 0) || (updateXPosition == xMaxPosition - getWidth() && updateYPosition
+            == yMaxPosition - getHeight())){
+                xVelocity = - xVelocity;
+                yVelocity = - yVelocity;
+            }else{
+                xPosition = updateXPosition;
+                yPosition = updateYPosition;
+            }
         }else{
-            xPosition = updateXPosition;
-            yPosition = updateYPosition;
+            updateXPosition -= dt * xVelocity;
+            updateYPosition -= dt * yVelocity;
         }
         setPosition(updateXPosition, updateYPosition);
     }
 
-    public void testHit(GraphicsGroup bubbles){
-        if(bubbles.getElementAt(xPosition - 0.01, yPosition + 0.5 * getHeight()) != null){
-            bubbles.remove(
-                bubbles.getElementAt(xPosition - 0.01, yPosition + 0.5 * getHeight()));
-            xVelocity = -xVelocity;
+    public boolean testHit(GraphicsGroup bubbles){
+        if(bubbles.getElementAt(xPosition + getWidth() / 2, yPosition) != null){
+            xVelocity = 0;
+            yVelocity = 0;
+            return true;
         }
 
-        if(bubbles.getElementAt(xPosition + getWidth() + 0.01, yPosition + 0.5 * getHeight()) != null){
-            bubbles.remove(
-                bubbles.getElementAt(xPosition+getWidth() + 0.01, yPosition + 0.5 * getHeight()));
-            xVelocity = -xVelocity;
+        if(bubbles.getElementAt(xPosition + getWidth(), yPosition) != null){
+            xVelocity = 0;
+            yVelocity = 0;
+            return true;
         }
 
-        if(bubbles.getElementAt(xPosition + 0.5 * getWidth(), yPosition - 0.01) != null){
-            bubbles.remove(
-                bubbles.getElementAt(xPosition + 0.5 * getWidth(), yPosition - 0.01));
-            yVelocity = -yVelocity;
+        if(bubbles.getElementAt(xPosition + 0.5 * getWidth(), yPosition) != null){
+            xVelocity = 0;
+            yVelocity = 0;
+            return true;
         }
 
         if(bubbles.getElementAt(xPosition + 0.5 * getWidth(), yPosition + getHeight() + 0.01) != null){
-            bubbles.remove(
-                bubbles.getElementAt(xPosition + 0.5 * getWidth(), yPosition+getHeight() + 0.01));
-            yVelocity = -yVelocity;
+            xVelocity = 0;
+            yVelocity = 0;
+            return true;
         }
+
+        return false;
     }
 
 

@@ -53,7 +53,9 @@ public class FrozenBubblesGame{
     public void processGame(){
         //mouseMove();
         canvas.animate(()->{
-            cannonBubble.updatePosition(0.1);
+            if (!cannonBubble.testHit(manager.getGraphicsGroup())){
+                cannonBubble.updatePosition(0.1, manager.getGraphicsGroup());
+            }
 
             if (cannonBubble.xVelocity == 0){
                 cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT);

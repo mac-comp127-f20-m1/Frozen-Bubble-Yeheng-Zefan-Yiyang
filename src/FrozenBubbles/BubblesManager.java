@@ -53,4 +53,8 @@ public class BubblesManager {
             return Color.BLUE;
         }
     }
+
+    public GraphicsGroup getGraphicsGroup(){
+        return bubbles;
+    }
 }
