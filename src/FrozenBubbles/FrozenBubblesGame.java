@@ -53,11 +53,10 @@ public class FrozenBubblesGame{
     public void processGame(){
         //mouseMove();
         canvas.animate(()->{
-            if (!cannonBubble.testHit(manager.getGraphicsGroup())){
-                cannonBubble.updatePosition(0.1, manager.getGraphicsGroup());
-            }
+            cannonBubble.updatePosition(0.1, manager.getGraphicsGroup());
 
             if (cannonBubble.xVelocity == 0){
+                manager.addCannonBubble(cannonBubble);
                 cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT);
                 cannonBubble.setFillColor(getRandomColor());
                 canvas.add(cannonBubble);

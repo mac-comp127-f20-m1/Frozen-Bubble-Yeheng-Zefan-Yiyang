@@ -57,4 +57,8 @@ public class BubblesManager {
     public GraphicsGroup getGraphicsGroup(){
         return bubbles;
     }
+    
+    public void addCannonBubble(CannonBubble cannonBubble){
+        bubbles.add(cannonBubble);
+    }
 }

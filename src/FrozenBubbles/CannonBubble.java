@@ -66,29 +66,37 @@ public class CannonBubble extends Ellipse{
     }
 
     public boolean testHit(GraphicsGroup bubbles){
-        if(bubbles.getElementAt(xPosition - 0.01, yPosition + 0.5 * getHeight()) != null){
-            xVelocity = 0;
-            yVelocity = 0;
-            return true;
+        for (int i = 0; i < 360; i++){
+            if (bubbles.getElementAt((xPosition + 15) + 15.1 * Math.cos(i * Math.PI / 180), (yPosition + 15) + 15.1 * Math.sin(i * Math.PI / 180) + 0.01) != null){
+                xVelocity = 0;
+                yVelocity = 0;
+                return true;
+            }
         }
 
-        if(bubbles.getElementAt(xPosition + getWidth() + 0.01, yPosition + 0.5 * getHeight()) != null){
-            xVelocity = 0;
-            yVelocity = 0;
-            return true;
-        }
+        // if(bubbles.getElementAt(xPosition - 0.01, yPosition + 0.5 * getHeight()) != null){
+        //     xVelocity = 0;
+        //     yVelocity = 0;
+        //     return true;
+        // }
 
-        if(bubbles.getElementAt(xPosition + 0.5 * getWidth(), yPosition - 0.01) != null){
-            xVelocity = 0;
-            yVelocity = 0;
-            return true;
-        }
+        // if(bubbles.getElementAt(xPosition + getWidth() + 0.01, yPosition + 0.5 * getHeight()) != null){
+        //     xVelocity = 0;
+        //     yVelocity = 0;
+        //     return true;
+        // }
 
-        if(bubbles.getElementAt(xPosition + 0.5 * getWidth(), yPosition + getHeight() + 0.01) != null){
-            xVelocity = 0;
-            yVelocity = 0;
-            return true;
-        }
+        // if(bubbles.getElementAt(xPosition + 0.5 * getWidth(), yPosition - 0.01) != null){
+        //     xVelocity = 0;
+        //     yVelocity = 0;
+        //     return true;
+        // }
+
+        // if(bubbles.getElementAt(xPosition + 0.5 * getWidth(), yPosition + getHeight() + 0.01) != null){
+        //     xVelocity = 0;
+        //     yVelocity = 0;
+        //     return true;
+        // }
 
         return false;
     }
