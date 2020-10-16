@@ -14,7 +14,7 @@ public class FrozenBubblesGame{
 
     public static final int CANVAS_WIDTH = 600;
     public static final int CANVAS_HEIGHT = 800;
-    public static final int SPEED = 2000;
+    public static final int SPEED = 200;
     public static final int CANNON_LENGTH = 40;
 
     public CannonBubble cannonBubble;
@@ -24,13 +24,11 @@ public class FrozenBubblesGame{
     public FrozenBubblesGame(){
         canvas = new CanvasWindow("FrozenBubble", CANVAS_WIDTH, CANVAS_HEIGHT);
 
-        cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT);
-        cannonBubble.setFillColor(getRandomColor());
-        cannonBubble.setFilled(true);
-
         cannon = new Cannon(285, 315, 315, 285, 700, 700, 740, 740);
         cannon.setFillColor(Color.BLACK);
-        cannon.setFilled(true);
+
+        cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT);
+        cannonBubble.setFillColor(getRandomColor());
 
         manager = new BubblesManager(canvas);
         manager.generateBubbles();
@@ -59,6 +57,7 @@ public class FrozenBubblesGame{
 
             if (cannonBubble.xVelocity == 0){
                 cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT);
+                cannonBubble.setFillColor(getRandomColor());
                 canvas.add(cannonBubble);
             }
         });
