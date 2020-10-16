@@ -14,7 +14,7 @@ public class FrozenBubblesGame{
 
     public static final int CANVAS_WIDTH = 600;
     public static final int CANVAS_HEIGHT = 800;
-    public static final int SPEED = 200;
+    public static final int SPEED = 400;
     public static final int CANNON_LENGTH = 40;
 
     public CannonBubble cannonBubble;
@@ -55,7 +55,7 @@ public class FrozenBubblesGame{
         canvas.animate(()->{
             cannonBubble.updatePosition(0.1, manager.getGraphicsGroup());
 
-            if (cannonBubble.xVelocity == 0){
+            if (cannonBubble.getxVelocity() == 0){
                 manager.addCannonBubble(cannonBubble);
                 cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT);
                 cannonBubble.setFillColor(getRandomColor());
