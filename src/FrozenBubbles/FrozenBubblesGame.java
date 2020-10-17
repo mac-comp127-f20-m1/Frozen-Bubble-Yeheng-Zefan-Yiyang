@@ -1,25 +1,25 @@
 package FrozenBubbles;
 
-import java.awt.Canvas;
+
 import java.awt.Color;
-import java.awt.MouseInfo;
-import java.util.List;
+
+
 import java.util.Random;
 
 import edu.macalester.graphics.CanvasWindow;
-import edu.macalester.graphics.Point;
+
 
 public class FrozenBubblesGame{
     public CanvasWindow canvas;
 
-    public static final int CANVAS_WIDTH = 600;
-    public static final int CANVAS_HEIGHT = 800;
-    public static final int SPEED = 400;
-    public static final int CANNON_LENGTH = 40;
+    private static final int CANVAS_WIDTH = 600;
+    private static final int CANVAS_HEIGHT = 800;
+    private static final int SPEED = 50;
+    private static final int CANNON_LENGTH = 40;
 
-    public CannonBubble cannonBubble;
-    public Cannon cannon;
-    public BubblesManager manager;
+    private CannonBubble cannonBubble;
+    private Cannon cannon;
+    private BubblesManager manager;
 
     public FrozenBubblesGame(){
         canvas = new CanvasWindow("FrozenBubble", CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -40,31 +40,35 @@ public class FrozenBubblesGame{
         frozenBubblesGame.run();
     }
 
-    public void run(){
+    private void run(){
         processGame();
         addObjects();
     }
 
-    public void addObjects(){
+    private void addObjects(){
         canvas.add(cannonBubble);
         canvas.add(cannon);
     }
 
-    public void processGame(){
+    private void processGame(){
         //mouseMove();
         canvas.animate(()->{
+            if (!cannonBubble.testHit(manager.getGraphicsGroup())){
+                cannonBubble.updatePosition(0.1, manager.getGraphicsGroup());
+            }
             cannonBubble.updatePosition(0.1, manager.getGraphicsGroup());
 
-            if (cannonBubble.getxVelocity() == 0){
-                manager.addCannonBubble(cannonBubble);
+            if (cannonBubble.getXVelocity() == 0){
+                manager.correctCannonBubble(cannonBubble);
                 cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT);
                 cannonBubble.setFillColor(getRandomColor());
                 canvas.add(cannonBubble);
             }
+            
         });
     }
 
-    public Color getRandomColor(){
+    private Color getRandomColor(){
         Random rand = new Random();
         int i = rand.nextInt(3);
         if (i == 0){
