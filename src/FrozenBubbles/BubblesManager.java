@@ -22,55 +22,68 @@ public class BubblesManager {
     private static final int MAX_RAW = 25;
     private List<Double> evenLineXPosition = new ArrayList<>();
     private List<Double> oddLineXPosition = new ArrayList<>();
-    private List<Double> evenLineYPosition =new ArrayList<>();
+    private List<Double> evenLineYPosition = new ArrayList<>();
     private List<Double> oddLineYPosition = new ArrayList<>();
     private List<Double> yPosition = new ArrayList<>();
     private List<Point> points = new ArrayList<>();
+    private List<Color> evenLineColors = new ArrayList<>();
+    private List<Color> oddLineColors = new ArrayList<>();
 
     public BubblesManager(CanvasWindow canvas){
+
         this.canvas = canvas;
         bubbles = new GraphicsGroup();
+
     }
+
     public void generateBubbles(){
+
         for (int i = 0; i < ROW; i += 2){
             for (int j = 0; j < COLUMN; j++){
                 double xPosition = DIAMETER * j;
                 evenLineXPosition.add(xPosition);
                 double yPosition = (DIAMETER - 2.5) * i;
                 Color color = getRandomColor();
+                evenLineColors.add(color);
                 Bubbles bubble = new Bubbles(xPosition, yPosition, DIAMETER, DIAMETER, color);
                 bubbles.add(bubble);
             }
         }    
+
         for (int i = 1; i < ROW; i += 2){
             for (int j = 0; j < COLUMN - 1; j++){
                 double xPosition = 0.135 / 0.27 * DIAMETER + DIAMETER * j;
                 oddLineXPosition.add(xPosition);
                 double yPosition = (DIAMETER - 2.5) * i;
-                
                 Color color = getRandomColor();
+                oddLineColors.add(color);
                 Bubbles bubble = new Bubbles(xPosition, yPosition, DIAMETER, DIAMETER, color);
                 bubbles.add(bubble);
             }
         }
-        for(int i =0; i<MAX_RAW;i++){
+
+        for(int i = 0; i < MAX_RAW; i++){
             double y = (DIAMETER - 2.5) * i;
             yPosition.add(y);
         }
-        for(int i =0; i<yPosition.size();i=i+2){
+
+        for(int i = 0; i < yPosition.size(); i = i + 2){
             evenLineYPosition.add(yPosition.get(i));
         }
-        for(int i =1; i<yPosition.size();i=i+2){
+
+        for(int i = 1; i < yPosition.size(); i = i + 2){
             oddLineYPosition.add(yPosition.get(i));
         }
-        for(double evenX:evenLineXPosition){
-            for (double evenY:evenLineYPosition){
+
+        for(double evenX : evenLineXPosition){
+            for (double evenY : evenLineYPosition){
                 Point evenLinePoint = new Point(evenX, evenY);
                 points.add(evenLinePoint);
             }
         }
-        for(double oddX:oddLineXPosition){
-            for (double oddY:oddLineYPosition){
+
+        for(double oddX : oddLineXPosition){
+            for (double oddY : oddLineYPosition){
                 Point oddLinePoint = new Point(oddX, oddY);
                 points.add(oddLinePoint);
             }
@@ -103,15 +116,16 @@ public class BubblesManager {
     public void correctCannonBubble(CannonBubble cannonBubble){
         double currentY = cannonBubble.getY();
         double currentX = cannonBubble.getX();
-        double supposedY = yPosition.stream().min(Comparator.comparing(y->Math.abs(y-currentY))).orElse(null);
-        double i = supposedY/27.5;
-        if(i%2 ==0){
-            double supposedX = evenLineXPosition.stream().min(Comparator.comparing(x->Math.abs(x-currentX))).orElse(null);
+        double supposedY = yPosition.stream().min(Comparator.comparing(y -> Math.abs(y - currentY))).orElse(null);
+        double i = supposedY / 27.5;
+        if(i % 2 == 0){
+            double supposedX = evenLineXPosition.stream().min(Comparator.comparing(x -> Math.abs(x-currentX))).orElse(null);
             Point supposedPoint = points.stream().min(Comparator.comparing(p->Math.hypot((p.getX()-supposedX),(p.getY()-supposedY)))).orElse(null);
             
             while(points.remove(supposedPoint)){
                 points.remove(supposedPoint);
             }
+
             cannonBubble.setPosition(supposedPoint);
         }
         else{
@@ -121,10 +135,18 @@ public class BubblesManager {
             while(points.remove(supposedPoint)){
                 points.remove(supposedPoint);
             }
+
             cannonBubble.setPosition(supposedPoint);
         }
         bubbles.add(cannonBubble);
     }
     
+    public Color getColor(double xPosition, double yPosition){
+        if ((yPosition / 27.5) % 2 == 0){
+            return evenLineColors.get((int)((xPosition - 0.135 / 0.27 * DIAMETER) / DIAMETER) + (int)((yPosition / (DIAMETER - 2.5) - 1) / 2) * 19);
+        }else{
+            return oddLineColors.get((int)(xPosition / DIAMETER) + (int)(yPosition / (DIAMETER - 2.5) / 2) * 20);
+        }
+    }
 
 }
