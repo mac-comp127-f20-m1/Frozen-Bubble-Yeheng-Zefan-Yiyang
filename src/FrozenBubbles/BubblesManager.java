@@ -13,13 +13,13 @@ import edu.macalester.graphics.Point;
 
 public class BubblesManager {
 
-    public CanvasWindow canvas;
-    public GraphicsGroup bubbles;
+    private CanvasWindow canvas;
+    private GraphicsGroup bubbles;
 
-    public static final int ROW = 8;   
-    public static final int COLUMN = 20;
-    public static final int DIAMETER = 30;
-    public static final int MAX_RAW = 25;
+    private static final int ROW = 8;   
+    private static final int COLUMN = 20;
+    private static final int DIAMETER = 30;
+    private static final int MAX_RAW = 25;
     private List<Double> evenLineXPosition = new ArrayList<>();
     private List<Double> oddLineXPosition = new ArrayList<>();
     private List<Double> evenLineYPosition =new ArrayList<>();
@@ -99,13 +99,10 @@ public class BubblesManager {
         return bubbles;
     }
     
-    // public void addCannonBubble(CannonBubble cannonBubble){
-    //     bubbles.add(cannonBubble);
-    // }
+    
     public void correctCannonBubble(CannonBubble cannonBubble){
         double currentY = cannonBubble.getY();
         double currentX = cannonBubble.getX();
-        // Note note = song.stream().max(Comparator.comparing(a -> a.getEndTime())).orElse(null);
         double supposedY = yPosition.stream().min(Comparator.comparing(y->Math.abs(y-currentY))).orElse(null);
         double i = supposedY/27.5;
         if(i%2 ==0){
