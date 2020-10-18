@@ -58,8 +58,8 @@ public class CannonBubble extends Ellipse{
                 yPosition = updateYPosition;
             }
         }else{
-            updateXPosition -= dt * xVelocity;
-            updateYPosition -= dt * yVelocity;
+            updateXPosition -= xPosition;
+            updateYPosition -= yPosition;
         }
         setPosition(updateXPosition, updateYPosition);
     }
