@@ -1,5 +1,6 @@
 package FrozenBubbles;
 
+import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;
 import edu.macalester.graphics.GraphicsGroup;
 
@@ -10,18 +11,16 @@ import java.util.Random;
 import java.awt.Color;
 
 public class CannonBubble extends Ellipse{
-    public Color color;
+    private Color color;
 
-    private static final int DIAMETER = 30;
+    private double xVelocity;
+    private double yVelocity;
 
-    public double xVelocity;
-    public double yVelocity;
+    private double xPosition;
+    private double yPosition;
 
-    public double xPosition;
-    public double yPosition;
-
-    public double xMaxPosition;
-    public double yMaxPosition;
+    private double xMaxPosition;
+    private double yMaxPosition;
 
     public CannonBubble(double x, double y, double width, double height, double speed, 
                         double xMaxPosition, double yMaxPosition) {
@@ -34,6 +33,10 @@ public class CannonBubble extends Ellipse{
         this.yMaxPosition = yMaxPosition;
 
         Random rand = new Random();
+
+        Color colorRandom = getRandomColor();
+        setFillColor(colorRandom);
+        this.color = colorRandom;
 
         xVelocity = speed * Math.sin(rand.nextDouble() * Math.PI);
         yVelocity = - speed * Math.cos((rand.nextDouble() - 0.5) * Math.PI);
@@ -67,6 +70,18 @@ public class CannonBubble extends Ellipse{
             updateYPosition -= dt * yVelocity;
         }
         setPosition(updateXPosition, updateYPosition);
+    }
+
+    private Color getRandomColor(){
+        Random rand = new Random();
+        int i = rand.nextInt(3);
+        if (i == 0){
+            return Color.RED;
+        }else if (i == 1){
+            return Color.YELLOW;
+        }else{
+            return Color.BLUE;
+        }
     }
 
     public boolean testHit(GraphicsGroup bubbles){
@@ -105,36 +120,20 @@ public class CannonBubble extends Ellipse{
         return false;
     }
 
+    public Color getColor(){
+        return color;
+    }
+
     public double getXVelocity(){
         return xVelocity;
     }
 
-    public void eliminateBubbles(BubblesManager bubbles){
-        if (bubbles.getColor(xPosition - 15, yPosition - 30) == bubbles.getColor(xPosition, yPosition) || 
-            bubbles.getColor(xPosition + 15, yPosition - 30) == bubbles.getColor(xPosition, yPosition)){
-            int xLowerBound = 0;
-            int xUpperBound = 0;
-            for (int i = (int)(xPosition - 0.135 / 0.27 * DIAMETER) / DIAMETER - 1; i >= 0; i--){
-                List<Integer> list = new ArrayList<>();
-                if (i % 2 == 0){
-                    for (int j = 0; j < 20; j++){
-                        if (bubbles.getColor(xPosition, yPosition) == bubbles.getColor(DIAMETER * j, (DIAMETER - 2.5) * i)){
-                            list.add(1);
-                        }else{
-                            list.add(0);
-                        }
-                    }
-                }else{
-                    for (int j = 0; j < 19; j++){
-                        if (bubbles.getColor(xPosition, yPosition) == bubbles.getColor(0.135 / 0.27 * DIAMETER + DIAMETER * j, (DIAMETER - 2.5) * i)){
-                            list.add(1);
-                        }else{
-                            list.add(0);
-                        }
-                    }
-                }
-            }
-        }
+    public double getXPosition(){
+        return xPosition;
+    }
+
+    public double getYPosition(){
+        return yPosition;
     }
 
 

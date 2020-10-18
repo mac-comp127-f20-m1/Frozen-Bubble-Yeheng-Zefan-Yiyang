@@ -2,8 +2,8 @@ package FrozenBubbles;
 
 
 import java.awt.Color;
-
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import edu.macalester.graphics.CanvasWindow;
@@ -16,6 +16,10 @@ public class FrozenBubblesGame{
     private static final int CANVAS_HEIGHT = 800;
     private static final int SPEED = 50;
     private static final int CANNON_LENGTH = 40;
+    
+    private static final int DIAMETER = 30;
+    private static final int ROW = 8;   
+    private static final int COLUMN = 20;
 
     private CannonBubble cannonBubble;
     private Cannon cannon;
@@ -28,10 +32,10 @@ public class FrozenBubblesGame{
         cannon.setFillColor(Color.BLACK);
 
         cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT);
-        cannonBubble.setFillColor(getRandomColor());
 
         manager = new BubblesManager(canvas);
         manager.generateBubbles();
+        manager.createInitialMap();
 
     }
 
@@ -60,6 +64,8 @@ public class FrozenBubblesGame{
 
             if (cannonBubble.getXVelocity() == 0){
                 manager.correctCannonBubble(cannonBubble);
+                //eliminateBubbles(manager, canvas, cannonBubble);
+                manager.updateMap();
                 cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT);
                 cannonBubble.setFillColor(getRandomColor());
                 canvas.add(cannonBubble);
@@ -123,5 +129,29 @@ public class FrozenBubblesGame{
 
     // public void shootCannonBall(){
     //     canvas.onClick();
+    // }
+
+    // public void eliminateBubbles(BubblesManager bubbles, CanvasWindow canvas, CannonBubble cannonbubble){
+
+    //     List<List<Integer>> list = new ArrayList<>();
+
+    //     double yPosition = cannonbubble.getYPosition();
+    //     int yNum = (int)(yPosition / (DIAMETER - 2.5));
+
+    //     double xPosition = cannonbubble.getXPosition();
+
+    //     int xNum = 0;
+
+    //     if (yNum % 2 == 0){
+    //         xNum = (int)(xPosition / DIAMETER);
+    //     }else{
+    //         xNum = (int)((xPosition - 0.135 / 0.27 * DIAMETER) / DIAMETER);
+    //     }
+
+    //     Color color = bubbles.getColor(xNum, yNum);
+
+    //     canvas.remove(cannonbubble);
+
+        
     // }
 }
