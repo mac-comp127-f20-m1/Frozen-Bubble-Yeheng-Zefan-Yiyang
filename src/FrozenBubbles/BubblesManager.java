@@ -30,6 +30,7 @@ public class BubblesManager {
     private List<Double> oddLineYPosition = new ArrayList<>();
     private List<Double> yPosition = new ArrayList<>();
     private List<Point> points = new ArrayList<>();
+    private List<Bubble> bubbleAround = new ArrayList<>();
 
     private List<List<Double>> listBubblePosition = new ArrayList<>();
     private List<Bubble> listBubble = new ArrayList<>();
@@ -163,7 +164,7 @@ public class BubblesManager {
     }
 
     public void updateMap() {
-        List<Bubble> bubbleAround = new ArrayList<>();
+        // List<Bubble> bubbleAround = new ArrayList<>();
         Bubble bubble = listBubble.get(listBubble.size() - 1);
         if (bubbles.getElementAt(bubble.getX() - DIAMETER, bubble.getY()) != null) {
             for (int i = 0; i < listBubble.size(); i++) {
@@ -219,7 +220,7 @@ public class BubblesManager {
 
     public Map<Bubble, List<Bubble>> createInitialMap() {
         for (Bubble bubble : listBubble) {
-            List<Bubble> bubbleAround = new ArrayList<>();
+            // List<Bubble> bubbleAround = new ArrayList<>();
             if (bubbles.getElementAt(bubble.getX() - DIAMETER, bubble.getY()) != null) {
                 for (int i = 0; i < listBubble.size(); i++) {
                     if (listBubblePosition.get(i).get(0) == bubble.getX() - DIAMETER
@@ -275,5 +276,19 @@ public class BubblesManager {
 
     public Map<Bubble, List<Bubble>> getMap() {
         return map;
+    }
+
+    public void ballCancel(CannonBubble cannonBubble, List<Bubble> sameColorWithCannonball, List<Bubble> visited){
+        for (int i = 0; i < bubbleAround.size(); i++){
+            if (bubbleAround.get(i).getColor() == cannonBubble.getColor()){
+                sameColorWithCannonball.add(bubbleAround.get(i));
+                bubbleAround.remove(i);
+                return ;
+            }
+            else if (bubbleAround.get(i).getColor() != cannonBubble.getColor()){
+                visited.add(bubbleAround.get(i));
+                return ;
+            }
+        }
     }
 }

@@ -8,6 +8,7 @@ import java.util.Random;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsGroup;
+import edu.macalester.graphics.Point;
 import edu.macalester.graphics.events.MouseButtonEvent;
 
 
@@ -26,6 +27,8 @@ public class FrozenBubblesGame {
     private CannonBubble cannonBubble;
     private Cannon cannon;
     private BubblesManager manager;
+    private boolean startBall;
+
     public FrozenBubblesGame() {
 
         canvas = new CanvasWindow("FrozenBubble", CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -33,7 +36,7 @@ public class FrozenBubblesGame {
         // canvas.add(mouseLayer);
         cannon = new Cannon(285, 315, 315, 285, 700, 700, 740, 740);
         cannon.setFillColor(Color.BLACK);
-        
+
         cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, canvas);
 
         manager = new BubblesManager(canvas);
@@ -48,8 +51,8 @@ public class FrozenBubblesGame {
     }
 
     private void run() {
-        processGame();
-        addObjects();
+        // canvas.onClick(event -> { setBoolean(); processGame1(); addObjects(); });
+        canvas.onClick(event -> { setBoolean(); processGame2(); addObjects(); });
     }
 
     private void addObjects() {
@@ -60,43 +63,54 @@ public class FrozenBubblesGame {
         cannon.setCenter(300, 720);
     }
 
+<<<<<<< HEAD
+    private void processGame1() {
+        if (startBall) {
+            canvas.animate(() -> {
+=======
     private void processGame() {
         // mouseMove();
         canvas.animate(() -> {
-            canvas.onMouseDown(event -> {event.equals(null);
+            canvas.onClick(event -> {event.equals(null);
                 // not sure if it is better to use onClick.() or onMouseDown.();
+>>>>>>> 1177605315ab7bc552b3b6ec7e5f9c74ec3e8777
+                if (!cannonBubble.testHit(manager.getGraphicsGroup())) {
+                    cannonBubble.updatePosition(0.1, manager.getGraphicsGroup(), canvas);
+                } else {
+                    manager.correctCannonBubble(cannonBubble);
+
+                    manager.updateMap();
+                    cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, canvas);
+                    cannonBubble.setFillColor(getRandomColor());
+
+                    canvas.add(cannonBubble);
+                }
+
+            });
+        }
+    }
+
+    private void processGame2() {
+        if (startBall) {
+            canvas.animate(() -> {
                 if (!cannonBubble.testHit(manager.getGraphicsGroup())) {
                     cannonBubble.updatePosition(0.1, manager.getGraphicsGroup(), canvas);
                 }
 
             });
-            if (cannonBubble.testHit(manager.getGraphicsGroup())) {
-                manager.correctCannonBubble(cannonBubble);
+        
+        if (cannonBubble.testHit(manager.getGraphicsGroup())) {
+            manager.correctCannonBubble(cannonBubble);
 
-                manager.updateMap();
-                cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, canvas);
-                cannonBubble.setFillColor(getRandomColor());
+            manager.updateMap();
+            cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, canvas);
+            cannonBubble.setFillColor(getRandomColor());
 
-                canvas.add(cannonBubble);
-            }
+            canvas.add(cannonBubble);
+        }}
+    };
 
-            // if (!cannonBubble.testHit(manager.getGraphicsGroup())){
-            // cannonBubble.updatePosition(0.1, manager.getGraphicsGroup(),canvas);
-            // // cannonBubble.updatePosition(0.1, manager.getGraphicsGroup(),canvas);
-            // }
-            // cannonBubble.updatePosition(0.1, manager.getGraphicsGroup(),canvas);
 
-            // if (cannonBubble.getXVelocity() == 0){
-            // manager.correctCannonBubble(cannonBubble);
-            // //eliminateBubbles(manager, canvas, cannonBubble);
-            // manager.updateMap();
-            // cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT,canvas);
-            // cannonBubble.setFillColor(getRandomColor());
-            // canvas.add(cannonBubble);
-            // }
-
-        });
-    }
 
     private Color getRandomColor() {
         Random rand = new Random();
@@ -187,4 +201,8 @@ public class FrozenBubblesGame {
 
 
     // }
+
+    private void setBoolean() {
+        startBall = true;
+    }
 }
