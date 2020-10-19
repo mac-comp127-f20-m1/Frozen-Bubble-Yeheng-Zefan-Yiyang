@@ -3,6 +3,7 @@ package FrozenBubbles;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;
 import edu.macalester.graphics.GraphicsGroup;
+import edu.macalester.graphics.Point;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +23,11 @@ public class CannonBubble extends Ellipse{
     private double xMaxPosition;
     private double yMaxPosition;
 
+    private double degree;
+    private double speed;
+
     public CannonBubble(double x, double y, double width, double height, double speed, 
-                        double xMaxPosition, double yMaxPosition) {
+                        double xMaxPosition, double yMaxPosition, CanvasWindow canvas) {
 
         super(x, y, width, height);
 
@@ -31,22 +35,25 @@ public class CannonBubble extends Ellipse{
         this.yPosition = y;
         this.xMaxPosition = xMaxPosition;
         this.yMaxPosition = yMaxPosition;
+        this.speed = speed;
+        
 
-        Random rand = new Random();
+        
 
         Color colorRandom = getRandomColor();
         setFillColor(colorRandom);
         this.color = colorRandom;
 
-        xVelocity = speed * Math.sin(rand.nextDouble() * Math.PI);
-        yVelocity = - speed * Math.cos((rand.nextDouble() - 0.5) * Math.PI);
+        canvas.onClick(event->setVelocity(setDegree(event.getPosition())));
+
 
         setFilled(true);
     }
 
-    public void updatePosition(double dt, GraphicsGroup bubbles){
+    public void updatePosition(double dt, GraphicsGroup bubbles,CanvasWindow canvas){
         double updateXPosition;
         double updateYPosition;
+        canvas.onClick(event->setVelocity(setDegree(event.getPosition())));
         updateXPosition = xPosition + dt * xVelocity;
         updateYPosition = yPosition + dt * yVelocity;
 
@@ -138,5 +145,14 @@ public class CannonBubble extends Ellipse{
         return yPosition;
     }
 
+    private double setDegree(Point point){
+        double hypotenuse = Math.hypot(point.getX()-300,point.getY()-685);
+        double cathetus = point.getX()-300;
+        return Math.acos(cathetus/hypotenuse);
+    }
 
+    private void setVelocity(double degree){
+        xVelocity = speed * Math.sin(degree);
+        yVelocity = - speed * Math.cos(degree);
+    }
 }
