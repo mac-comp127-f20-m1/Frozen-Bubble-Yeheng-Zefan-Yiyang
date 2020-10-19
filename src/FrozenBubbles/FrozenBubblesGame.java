@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Random;
 
 import edu.macalester.graphics.CanvasWindow;
+import edu.macalester.graphics.GraphicsGroup;
+import edu.macalester.graphics.events.MouseButtonEvent;
 
 
 public class FrozenBubblesGame {
@@ -24,14 +26,14 @@ public class FrozenBubblesGame {
     private CannonBubble cannonBubble;
     private Cannon cannon;
     private BubblesManager manager;
-
     public FrozenBubblesGame() {
 
         canvas = new CanvasWindow("FrozenBubble", CANVAS_WIDTH, CANVAS_HEIGHT);
-
+        // mouseLayer = new GraphicsGroup();
+        // canvas.add(mouseLayer);
         cannon = new Cannon(285, 315, 315, 285, 700, 700, 740, 740);
         cannon.setFillColor(Color.BLACK);
-
+        
         cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, canvas);
 
         manager = new BubblesManager(canvas);
@@ -60,9 +62,9 @@ public class FrozenBubblesGame {
 
     private void processGame() {
         // mouseMove();
-
         canvas.animate(() -> {
-            canvas.onClick(event -> {
+            canvas.onMouseDown(event -> {event.equals(null);
+                // not sure if it is better to use onClick.() or onMouseDown.();
                 if (!cannonBubble.testHit(manager.getGraphicsGroup())) {
                     cannonBubble.updatePosition(0.1, manager.getGraphicsGroup(), canvas);
                 }
