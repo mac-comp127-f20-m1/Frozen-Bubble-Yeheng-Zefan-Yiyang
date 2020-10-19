@@ -74,11 +74,13 @@ public class CannonBubble extends Ellipse{
 
     private Color getRandomColor(){
         Random rand = new Random();
-        int i = rand.nextInt(3);
+        int i = rand.nextInt(4);
         if (i == 0){
             return Color.RED;
         }else if (i == 1){
             return Color.YELLOW;
+        }else if (i == 2){
+            return Color.GREEN;
         }else{
             return Color.BLUE;
         }

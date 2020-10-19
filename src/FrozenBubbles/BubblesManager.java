@@ -2,6 +2,7 @@ package FrozenBubbles;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -33,7 +34,7 @@ public class BubblesManager {
     private List<List<Double>> listBubblePosition = new ArrayList<>();
     private List<Bubble> listBubble = new ArrayList<>();
 
-    private Map<Bubble, List<Bubble>> map;
+    private Map<Bubble, List<Bubble>> map = new HashMap<>();
 
     public BubblesManager(CanvasWindow canvas) {
 
@@ -107,11 +108,13 @@ public class BubblesManager {
 
     public Color getRandomColor() {
         Random rand = new Random();
-        int i = rand.nextInt(3);
+        int i = rand.nextInt(4);
         if (i == 0) {
             return Color.RED;
         } else if (i == 1) {
             return Color.YELLOW;
+        }else if (i == 2){
+            return Color.GREEN;
         } else {
             return Color.BLUE;
         }
