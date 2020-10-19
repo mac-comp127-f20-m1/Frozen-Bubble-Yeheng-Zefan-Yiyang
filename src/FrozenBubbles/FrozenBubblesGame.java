@@ -63,7 +63,7 @@ public class FrozenBubblesGame {
     private void processGame() {
         // mouseMove();
         canvas.animate(() -> {
-            canvas.onMouseDown(event -> {event.equals(null);
+            canvas.onClick(event -> {event.equals(null);
                 // not sure if it is better to use onClick.() or onMouseDown.();
                 if (!cannonBubble.testHit(manager.getGraphicsGroup())) {
                     cannonBubble.updatePosition(0.1, manager.getGraphicsGroup(), canvas);

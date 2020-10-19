@@ -44,7 +44,7 @@ public class CannonBubble extends Ellipse{
         setFillColor(colorRandom);
         this.color = colorRandom;
 
-        canvas.onMouseDown(event->setVelocity(setDegree(event.getPosition())));
+        // canvas.onMouseDown(event->setVelocity(setDegree(event.getPosition())));
         // not sure if it is better to use onClick.() or onMouseDown.()
         
 

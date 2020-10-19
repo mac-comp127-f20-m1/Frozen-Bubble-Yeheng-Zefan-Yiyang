@@ -18,6 +18,14 @@ public class Bubble extends Ellipse{
     public Color getColor(){
         return color;
     }
+
+    private void addNeighbor(){
+        
+    }
+
+    private void removeNeighbor(){
+
+    }
     
     
 }
