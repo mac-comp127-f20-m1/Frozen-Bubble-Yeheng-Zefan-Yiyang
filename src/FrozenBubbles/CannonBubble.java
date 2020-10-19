@@ -45,6 +45,7 @@ public class CannonBubble extends Ellipse{
         this.color = colorRandom;
 
         canvas.onClick(event->setVelocity(setDegree(event.getPosition())));
+        
 
 
         setFilled(true);
@@ -53,7 +54,6 @@ public class CannonBubble extends Ellipse{
     public void updatePosition(double dt, GraphicsGroup bubbles,CanvasWindow canvas){
         double updateXPosition;
         double updateYPosition;
-        canvas.onClick(event->setVelocity(setDegree(event.getPosition())));
         updateXPosition = xPosition + dt * xVelocity;
         updateYPosition = yPosition + dt * yVelocity;
 
@@ -152,7 +152,7 @@ public class CannonBubble extends Ellipse{
     }
 
     private void setVelocity(double degree){
-        xVelocity = speed * Math.sin(degree);
-        yVelocity = - speed * Math.cos(degree);
+        yVelocity = -speed * Math.sin(degree);
+        xVelocity = speed * Math.cos(degree);
     }
 }
