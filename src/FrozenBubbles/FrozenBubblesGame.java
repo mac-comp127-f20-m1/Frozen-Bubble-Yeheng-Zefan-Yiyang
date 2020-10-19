@@ -66,18 +66,17 @@ public class FrozenBubblesGame {
                 if (!cannonBubble.testHit(manager.getGraphicsGroup())) {
                     cannonBubble.updatePosition(0.1, manager.getGraphicsGroup(), canvas);
                 }
-                // cannonBubble.updatePosition(0.1, manager.getGraphicsGroup(), canvas);
 
-                if (cannonBubble.getXVelocity() == 0) {
-                    manager.correctCannonBubble(cannonBubble);
-
-                    manager.updateMap();
-                    cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, canvas);
-                    cannonBubble.setFillColor(getRandomColor());
-
-                    canvas.add(cannonBubble);
-                }
             });
+            if (cannonBubble.testHit(manager.getGraphicsGroup())) {
+                manager.correctCannonBubble(cannonBubble);
+
+                manager.updateMap();
+                cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, canvas);
+                cannonBubble.setFillColor(getRandomColor());
+
+                canvas.add(cannonBubble);
+            }
 
             // if (!cannonBubble.testHit(manager.getGraphicsGroup())){
             // cannonBubble.updatePosition(0.1, manager.getGraphicsGroup(),canvas);
