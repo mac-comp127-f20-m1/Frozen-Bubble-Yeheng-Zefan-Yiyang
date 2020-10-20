@@ -99,8 +99,6 @@ public class FrozenBubblesGame {
 
                 manager.updateMap();
                 cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, canvas);
-                cannonBubble.setFillColor(getRandomColor());
-
                 canvas.add(cannonBubble);
             }
         }

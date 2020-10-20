@@ -161,10 +161,11 @@ public class BubblesManager {
         }
         Bubble newBubble = new Bubble(cannonBubble.getX(), cannonBubble.getY(), cannonBubble.getWidth(),
             cannonBubble.getHeight(), cannonBubble.getColor());
-            System.out.println("currentcolor is "+ currentColor);
-            System.out.println("cannonBubble.getColor() is "+cannonBubble.getColor());
-            System.out.println(newBubble.getColor());
+            // System.out.println("currentcolor is "+ currentColor);
+            // System.out.println("cannonBubble.getColor() is "+cannonBubble.getColor());
+            // System.out.println(newBubble.getColor());
         canvas.add(newBubble);
+        canvas.remove(cannonBubble);
         bubbles.add(newBubble);
         listBubble.add(newBubble);
         listBubblePosition.add(List.of(cannonBubble.getX(), cannonBubble.getY()));
@@ -315,17 +316,14 @@ public class BubblesManager {
                 sameColorBubbles.add(bubble);
             }
         }
-        // for(Bubble bubble:sameColorBubbles){
-
-        // }
-        if (sameColorBubbles.size() >= 2) {
+       sameColorBubbles.add((Bubble)canvas.getElementAt(cannonBubble.getCenter()));
+        if (sameColorBubbles.size() >= 3) {
             for (Bubble bubble : sameColorBubbles) {
                 // canvas.remove(bubble);
 
                 bubbles.remove(bubble);
-                canvas.remove(cannonBubble);
+                // canvas.remove(cannonBubble);
                 // 这玩意也有问题，虽然他能消除同色bubble，但消除不了覆盖cannonbubble的新Bubble，
-                // 主要问题也是这个新bubble不太对劲，颜色除了第一次跟cannonball一样，其余全部随缘。
                 
                 // canvas.remove(canvas.getElementAt(cannonBubble.getCenter()));
                 // canvas.remove(cannonBubble);
