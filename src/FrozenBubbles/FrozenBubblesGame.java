@@ -52,7 +52,7 @@ public class FrozenBubblesGame {
 
     private void run() {
         // canvas.onClick(event -> { setBoolean(); processGame1(); addObjects(); });
-        canvas.onClick(event -> { setBoolean(); processGame2(); addObjects(); });
+        canvas.onClick(event -> { setBoolean(); processGame1(); addObjects(); });
     }
 
     private void addObjects() {
@@ -63,17 +63,9 @@ public class FrozenBubblesGame {
         cannon.setCenter(300, 720);
     }
 
-<<<<<<< HEAD
     private void processGame1() {
         if (startBall) {
             canvas.animate(() -> {
-=======
-    private void processGame() {
-        // mouseMove();
-        canvas.animate(() -> {
-            canvas.onClick(event -> {event.equals(null);
-                // not sure if it is better to use onClick.() or onMouseDown.();
->>>>>>> 1177605315ab7bc552b3b6ec7e5f9c74ec3e8777
                 if (!cannonBubble.testHit(manager.getGraphicsGroup())) {
                     cannonBubble.updatePosition(0.1, manager.getGraphicsGroup(), canvas);
                 } else {

@@ -114,7 +114,7 @@ public class BubblesManager {
             return Color.RED;
         } else if (i == 1) {
             return Color.YELLOW;
-        }else if (i == 2){
+        } else if (i == 2) {
             return Color.GREEN;
         } else {
             return Color.BLUE;
@@ -278,16 +278,22 @@ public class BubblesManager {
         return map;
     }
 
-    public void ballCancel(CannonBubble cannonBubble, List<Bubble> sameColorWithCannonball, List<Bubble> visited){
-        for (int i = 0; i < bubbleAround.size(); i++){
-            if (bubbleAround.get(i).getColor() == cannonBubble.getColor()){
+    public void ballCancel(CannonBubble cannonBubble, List<Bubble> sameColorWithCannonball, List<Bubble> visited) {
+        for (int i = 0; i < bubbleAround.size(); i++) {
+            if (bubbleAround.get(i).getColor() == cannonBubble.getColor()) {
                 sameColorWithCannonball.add(bubbleAround.get(i));
                 bubbleAround.remove(i);
-                return ;
-            }
-            else if (bubbleAround.get(i).getColor() != cannonBubble.getColor()){
+                return;
+            } else if (bubbleAround.get(i).getColor() != cannonBubble.getColor()) {
                 visited.add(bubbleAround.get(i));
-                return ;
+                return;
+            }
+            for (Bubble bubble : sameColorWithCannonball) {
+                map.get(bubble);
+                ballCancel(cannonBubble, sameColorWithCannonball, visited);
+                if (sameColorWithCannonball.size() >= 3) {
+                    canvas.remove(bubble);
+                }
             }
         }
     }
