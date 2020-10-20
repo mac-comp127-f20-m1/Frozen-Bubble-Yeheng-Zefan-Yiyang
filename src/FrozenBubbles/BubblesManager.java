@@ -3,10 +3,11 @@ package FrozenBubbles;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
+import java.util.Set;
 import java.awt.Color;
 
 import edu.macalester.graphics.CanvasWindow;
@@ -131,6 +132,8 @@ public class BubblesManager {
         double currentX = cannonBubble.getX();
         double supposedY = yPosition.stream().min(Comparator.comparing(y -> Math.abs(y - currentY))).orElse(null);
         double i = supposedY / 27.5;
+        Color color;
+        
         if (i % 2 == 0) {
             double supposedX = evenLineXPosition.stream().min(Comparator.comparing(x -> Math.abs(x - currentX)))
                 .orElse(null);
@@ -141,7 +144,6 @@ public class BubblesManager {
             while (points.remove(supposedPoint)) {
                 points.remove(supposedPoint);
             }
-
             cannonBubble.setPosition(supposedPoint);
         } else {
             double supposedX = oddLineXPosition.stream().min(Comparator.comparing(x -> Math.abs(x - currentX)))
@@ -153,12 +155,13 @@ public class BubblesManager {
             while (points.remove(supposedPoint)) {
                 points.remove(supposedPoint);
             }
-
             cannonBubble.setPosition(supposedPoint);
+
         }
-        bubbles.add(cannonBubble);
         Bubble newBubble = new Bubble(cannonBubble.getX(), cannonBubble.getY(), cannonBubble.getWidth(),
             cannonBubble.getHeight(), cannonBubble.getColor());
+            canvas.add(newBubble);
+        bubbles.add(newBubble);
         listBubble.add(newBubble);
         listBubblePosition.add(List.of(cannonBubble.getX(), cannonBubble.getY()));
     }
@@ -278,22 +281,49 @@ public class BubblesManager {
         return map;
     }
 
-    public void ballCancel(CannonBubble cannonBubble, List<Bubble> sameColorWithCannonball, List<Bubble> visited) {
-        for (int i = 0; i < bubbleAround.size(); i++) {
-            if (bubbleAround.get(i).getColor() == cannonBubble.getColor()) {
-                sameColorWithCannonball.add(bubbleAround.get(i));
-                bubbleAround.remove(i);
-                return;
-            } else if (bubbleAround.get(i).getColor() != cannonBubble.getColor()) {
-                visited.add(bubbleAround.get(i));
-                return;
+    // public void ballCancel(CannonBubble cannonBubble, List<Bubble> sameColorWithCannonball, List<Bubble> visited) {
+    //     for (int i = 0; i < bubbleAround.size(); i++) {
+    //         if (bubbleAround.get(i).getColor() == cannonBubble.getColor()) {
+    //             sameColorWithCannonball.add(bubbleAround.get(i));
+    //             bubbleAround.remove(i);
+    //             return;
+    //         } else if (bubbleAround.get(i).getColor() != cannonBubble.getColor()) {
+    //             visited.add(bubbleAround.get(i));
+    //             return;
+    //         }
+    //         for (Bubble bubble : sameColorWithCannonball) {
+    //             map.get(bubble);
+    //             ballCancel(cannonBubble, sameColorWithCannonball, visited);
+    //             if (sameColorWithCannonball.size() >= 3) {
+    //                 canvas.remove(bubble);
+    //             }
+    //         }
+    //     }
+    // }
+    public void destroyBubbles(CannonBubble cannonBubble){
+        Color color = cannonBubble.getColor();
+        Set<Bubble> neighbour = cannonBubble.getNeighbours(canvas);
+        // System.out.println(neighbour);
+        Set<Bubble> sameColorBubbles = new HashSet<>();
+        for(Bubble bubble : neighbour){
+            if(bubble!=null&&bubble.getColor()==color){
+                sameColorBubbles.add(bubble);
             }
-            for (Bubble bubble : sameColorWithCannonball) {
-                map.get(bubble);
-                ballCancel(cannonBubble, sameColorWithCannonball, visited);
-                if (sameColorWithCannonball.size() >= 3) {
-                    canvas.remove(bubble);
-                }
+        }
+        // for(Bubble bubble:sameColorBubbles){
+
+        // }
+
+
+        if(sameColorBubbles.size()>=2){
+            for(Bubble bubble:sameColorBubbles){
+                // canvas.remove(bubble);
+                
+                bubbles.remove(bubble);
+                canvas.remove(cannonBubble);
+                
+                // canvas.remove(canvas.getElementAt(cannonBubble.getCenter()));
+                // canvas.remove(cannonBubble);
             }
         }
     }

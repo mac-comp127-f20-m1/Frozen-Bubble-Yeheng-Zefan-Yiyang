@@ -52,12 +52,12 @@ public class FrozenBubblesGame {
 
     private void run() {
         canvas.onClick(event -> { setBoolean(); processGame1(); addObjects(); });
+        // canvas.onClick(event -> { setBoolean(); processGame2(); addObjects(); });
     }
 
     private void addObjects() {
         canvas.add(cannonBubble);
         cannonBubble.setCenter(300, 685);
-        ;
         canvas.add(cannon);
         cannon.setCenter(300, 720);
     }
@@ -69,7 +69,7 @@ public class FrozenBubblesGame {
                     cannonBubble.updatePosition(0.1, manager.getGraphicsGroup(), canvas);
                 } else {
                     manager.correctCannonBubble(cannonBubble);
-
+                    manager.destroyBubbles(cannonBubble);
                     manager.updateMap();
                     cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, canvas);
                     cannonBubble.setFillColor(getRandomColor());
@@ -116,82 +116,6 @@ public class FrozenBubblesGame {
             return Color.BLUE;
         }
     }
-
-
-    // public void mouseMove(){
-
-    // if (MouseInfo.getPointerInfo().getLocation().getY() < 740){
-
-    // double angle = Math.atan(Math.abs(740 - MouseInfo.getPointerInfo().getLocation().getY()) /
-    // Math.abs(300 - MouseInfo.getPointerInfo().getLocation().getX()));
-
-    // if (MouseInfo.getPointerInfo().getLocation().getX() < 300){
-
-    // // canvas.onMouseMove(event -> cannonBubble.setPosition(event.getPosition().getX() *
-    // CANNON_LENGTH / Math.sqrt(Math.pow(750 - event.getPosition().getY(), 2) +
-    // Math.pow(event.getPosition().getX() - 300, 2)),
-    // // event.getPosition().getY() * CANNON_LENGTH / Math.sqrt(Math.pow(event.getPosition().getY(), 2)
-    // + Math.pow(event.getPosition().getX(), 2))));
-
-    // double x3 = 300 - 15 * Math.sin(angle);
-    // double y3 = 740 + 15 * Math.cos(angle);
-    // double x2 = 300 + 15 * Math.sin(angle);
-    // double y2 = 740 - 15 * Math.cos(angle);
-    // double x1 = x2 + 40 * Math.cos(angle);
-    // double y1 = y2 - 40 * Math.sin(angle);
-    // double x0 = x3 + 40 * Math.cos(angle);
-    // double y0 = y3 - 40 * Math.sin(angle);
-
-    // canvas.onMouseMove(event -> cannon.setVertices(List.of(new Point(x0, y0), new Point(x1, y1), new
-    // Point(x2, y2), new Point(x3, y3)), true));
-    // }else{
-    // double x3 = 300 - 15 * Math.sin(angle);
-    // double y3 = 740 - 15 * Math.cos(angle);
-    // double x2 = 300 + 15 * Math.sin(angle);
-    // double y2 = 740 + 15 * Math.cos(angle);
-    // double x1 = x2 + 40 * Math.cos(angle);
-    // double y1 = y2 + 40 * Math.sin(angle);
-    // double x0 = x3 + 40 * Math.cos(angle);
-    // double y0 = y3 + 40 * Math.sin(angle);
-
-    // canvas.onMouseMove(event -> cannon.setVertices(List.of(new Point(x0, y0), new Point(x1, y1), new
-    // Point(x2, y2), new Point(x3, y3)), true));
-
-    // }
-
-    // }
-
-
-    // }
-
-    // public void shootCannonBall(){
-    // canvas.onClick();
-    // }
-
-    // public void eliminateBubbles(BubblesManager bubbles, CanvasWindow canvas, CannonBubble
-    // cannonbubble){
-
-    // List<List<Integer>> list = new ArrayList<>();
-
-    // double yPosition = cannonbubble.getYPosition();
-    // int yNum = (int)(yPosition / (DIAMETER - 2.5));
-
-    // double xPosition = cannonbubble.getXPosition();
-
-    // int xNum = 0;
-
-    // if (yNum % 2 == 0){
-    // xNum = (int)(xPosition / DIAMETER);
-    // }else{
-    // xNum = (int)((xPosition - 0.135 / 0.27 * DIAMETER) / DIAMETER);
-    // }
-
-    // Color color = bubbles.getColor(xNum, yNum);
-
-    // canvas.remove(cannonbubble);
-
-
-    // }
 
     private void setBoolean() {
         startBallMoving = true;

@@ -3,12 +3,15 @@ package FrozenBubbles;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;
 import edu.macalester.graphics.GraphicsGroup;
+import edu.macalester.graphics.GraphicsObject;
 import edu.macalester.graphics.Point;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-
+import java.util.Set;
 import java.awt.Color;
 
 public class CannonBubble extends Ellipse{
@@ -26,6 +29,9 @@ public class CannonBubble extends Ellipse{
     private double degree;
     private double speed;
 
+    private double width;
+    private double height;
+
     public CannonBubble(double x, double y, double width, double height, double speed, 
                         double xMaxPosition, double yMaxPosition, CanvasWindow canvas) {
 
@@ -33,6 +39,8 @@ public class CannonBubble extends Ellipse{
 
         this.xPosition = x;
         this.yPosition = y;
+        this.width = width;
+        this.height = height;
         this.xMaxPosition = xMaxPosition;
         this.yMaxPosition = yMaxPosition;
         this.speed = speed;
@@ -144,6 +152,43 @@ public class CannonBubble extends Ellipse{
 
     public double getYPosition(){
         return yPosition;
+    }
+    public double getCenterX(){
+        return xPosition+width/2;
+    }
+    public double getCenterY(){
+        return yPosition+height/2;
+    }
+    public Set<Bubble> getNeighbours(CanvasWindow canvas){
+        Set<Bubble> neighbourBubbles = new HashSet<>();
+        double centerX = getCenterX();
+        double centerY = getCenterY();
+        if(canvas.getElementAt(centerX-width/2, centerY-height)!=null){
+            neighbourBubbles.add((Bubble)canvas.getElementAt(centerX-width/2, centerY-height));
+            // add bubble1(the one at the top-left) to the set
+        }
+        if(canvas.getElementAt(centerX+width/2, centerY-height)!=null){
+            neighbourBubbles.add((Bubble)canvas.getElementAt(centerX+width/2, centerY-height));
+            // add bubble2(the one at the top-right) to the set
+        }
+        if(canvas.getElementAt(centerX-width, centerY)!=null){
+            neighbourBubbles.add((Bubble)canvas.getElementAt(centerX-width, centerY));
+            // add bubble3(the one at the most left) to the set
+        }
+        if(canvas.getElementAt(centerX+width, centerY)!=null){
+            neighbourBubbles.add((Bubble)canvas.getElementAt(centerX-width/2, centerY));
+            // add bubble4(the one at the most right) to the set
+        }
+        if(canvas.getElementAt(centerX-width/2, centerY+height)!=null){
+            neighbourBubbles.add((Bubble)canvas.getElementAt(centerX-width/2, centerY+height));
+            // add bubble5(the one at the bottom-left) to the set
+        }
+        if(canvas.getElementAt(centerX+width/2, centerY+height)!=null){
+            neighbourBubbles.add((Bubble)canvas.getElementAt(centerX+width/2, centerY+height));
+            // add bubble6(the one at the bottom-right) to the set
+        }
+        return neighbourBubbles;
+
     }
 
     private double setDegree(Point point){
