@@ -177,7 +177,7 @@ public class CannonBubble extends Ellipse{
             // add bubble3(the one at the most left) to the set
         }
         if(canvas.getElementAt(centerX+width, centerY)!=null){
-            neighbourBubbles.add((Bubble)canvas.getElementAt(centerX-width/2, centerY));
+            neighbourBubbles.add((Bubble)canvas.getElementAt(centerX+width, centerY));
             // add bubble4(the one at the most right) to the set
         }
         if(canvas.getElementAt(centerX-width/2, centerY+height)!=null){

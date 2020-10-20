@@ -51,7 +51,8 @@ public class FrozenBubblesGame {
     }
 
     private void run() {
-        canvas.onClick(event -> { setBoolean(); processGame1(); addObjects(); });
+        addObjects(); 
+        canvas.onClick(event -> { setBoolean();  processGame1();  addObjects(); });
         // canvas.onClick(event -> { setBoolean(); processGame2(); addObjects(); });
     }
 
@@ -70,6 +71,8 @@ public class FrozenBubblesGame {
                 } else {
                     manager.correctCannonBubble(cannonBubble);
                     manager.destroyBubbles(cannonBubble);
+                    
+                    //manager.fallBubble();
                     manager.updateMap();
                     cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, canvas);
                     // Color color = getRandomColor();
