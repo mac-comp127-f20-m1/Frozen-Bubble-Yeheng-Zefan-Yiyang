@@ -66,7 +66,7 @@ public class CannonBubble extends Ellipse{
         updateXPosition = xPosition + dt * xVelocity;
         updateYPosition = yPosition + dt * yVelocity;
 
-        if (!testHit(bubbles)){
+        if (!testHit(bubbles,canvas)){
             if (updateXPosition < 0 || updateXPosition > xMaxPosition - getWidth()){
                 xVelocity = -xVelocity;
             }else if (updateYPosition <= 0){
@@ -102,11 +102,12 @@ public class CannonBubble extends Ellipse{
         }
     }
 
-    public boolean testHit(GraphicsGroup bubbles){
+    public boolean testHit(GraphicsGroup bubbles,CanvasWindow canvas){
         for (int i = 0; i < 360; i++){
             if (bubbles.getElementAt((xPosition + 15) + 15.1 * Math.cos(i * Math.PI / 180), (yPosition + 15) + 15.1 * Math.sin(i * Math.PI / 180) + 0.01) != null){
                 xVelocity = 0;
                 yVelocity = 0;
+                canvas.remove(this);
                 return true;
             }
         }

@@ -22,8 +22,9 @@ public class Bubble extends Ellipse{
         this.yPosition= y;
         this.width = width;
         this.height = height;
-        this.setFillColor(color);
         this.color = color;
+        setFillColor(color);
+        
     }
 
     public Color getColor(){

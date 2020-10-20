@@ -65,15 +65,19 @@ public class FrozenBubblesGame {
     private void processGame1() {
         if (startBallMoving) {
             canvas.animate(() -> {
-                if (!cannonBubble.testHit(manager.getGraphicsGroup())) {
+                if (!cannonBubble.testHit(manager.getGraphicsGroup(),canvas)) {
                     cannonBubble.updatePosition(0.1, manager.getGraphicsGroup(), canvas);
                 } else {
                     manager.correctCannonBubble(cannonBubble);
                     manager.destroyBubbles(cannonBubble);
                     manager.updateMap();
                     cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, canvas);
-                    cannonBubble.setFillColor(getRandomColor());
-
+                    // Color color = getRandomColor();
+                    // We do not need to getRandomColor() there because when we create a cannonBubble
+                    // it already give the cannonBubble a color.
+                    // cannonBubble.setFillColor(color);
+                    // System.out.println("randomnization is "+color);
+                    // System.out.println("new cannBubble color is"+cannonBubble.getColor());
                     canvas.add(cannonBubble);
                 }
 
@@ -84,13 +88,13 @@ public class FrozenBubblesGame {
     private void processGame2() {
         if (startBallMoving) {
             canvas.animate(() -> {
-                if (!cannonBubble.testHit(manager.getGraphicsGroup())) {
+                if (!cannonBubble.testHit(manager.getGraphicsGroup(),canvas)) {
                     cannonBubble.updatePosition(0.1, manager.getGraphicsGroup(), canvas);
                 }
 
             });
 
-            if (cannonBubble.testHit(manager.getGraphicsGroup())) {
+            if (cannonBubble.testHit(manager.getGraphicsGroup(),canvas)) {
                 manager.correctCannonBubble(cannonBubble);
 
                 manager.updateMap();
