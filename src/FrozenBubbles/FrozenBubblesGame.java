@@ -27,7 +27,7 @@ public class FrozenBubblesGame {
     private CannonBubble cannonBubble;
     private Cannon cannon;
     private BubblesManager manager;
-    private boolean startBall;
+    private boolean startBallMoving;
 
     public FrozenBubblesGame() {
 
@@ -51,7 +51,6 @@ public class FrozenBubblesGame {
     }
 
     private void run() {
-        // canvas.onClick(event -> { setBoolean(); processGame1(); addObjects(); });
         canvas.onClick(event -> { setBoolean(); processGame1(); addObjects(); });
     }
 
@@ -64,7 +63,7 @@ public class FrozenBubblesGame {
     }
 
     private void processGame1() {
-        if (startBall) {
+        if (startBallMoving) {
             canvas.animate(() -> {
                 if (!cannonBubble.testHit(manager.getGraphicsGroup())) {
                     cannonBubble.updatePosition(0.1, manager.getGraphicsGroup(), canvas);
@@ -83,25 +82,25 @@ public class FrozenBubblesGame {
     }
 
     private void processGame2() {
-        if (startBall) {
+        if (startBallMoving) {
             canvas.animate(() -> {
                 if (!cannonBubble.testHit(manager.getGraphicsGroup())) {
                     cannonBubble.updatePosition(0.1, manager.getGraphicsGroup(), canvas);
                 }
 
             });
-        
-        if (cannonBubble.testHit(manager.getGraphicsGroup())) {
-            manager.correctCannonBubble(cannonBubble);
 
-            manager.updateMap();
-            cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, canvas);
-            cannonBubble.setFillColor(getRandomColor());
+            if (cannonBubble.testHit(manager.getGraphicsGroup())) {
+                manager.correctCannonBubble(cannonBubble);
 
-            canvas.add(cannonBubble);
-        }}
+                manager.updateMap();
+                cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, canvas);
+                cannonBubble.setFillColor(getRandomColor());
+
+                canvas.add(cannonBubble);
+            }
+        }
     };
-
 
 
     private Color getRandomColor() {
@@ -195,6 +194,6 @@ public class FrozenBubblesGame {
     // }
 
     private void setBoolean() {
-        startBall = true;
+        startBallMoving = true;
     }
 }
