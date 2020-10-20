@@ -81,7 +81,7 @@ public class FrozenBubblesGame {
 
                     manager.destroyBubbles(newBubble);
                     
-                    //manager.fallBubble();
+                    // manager.fallBubble();
                     //manager.updateMap();
                     cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, canvas);
                     // Color color = getRandomColor();
@@ -89,7 +89,7 @@ public class FrozenBubblesGame {
                     // it already give the cannonBubble a color.
                     // cannonBubble.setFillColor(color);
                     // System.out.println("randomnization is "+color);
-                    // System.out.println("new cannBubble color is"+cannonBubble.getColor());
+                    System.out.println("new cannBubble color is"+cannonBubble.getColor());
                     canvas.add(cannonBubble);
                 }
 

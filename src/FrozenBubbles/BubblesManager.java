@@ -311,7 +311,7 @@ public class BubblesManager {
     public void fallBubble(){
         for (Bubble bubble : listBubble){
             if (bubble.getNeighbours(canvas).size() == 0){
-                canvas.remove(bubble);
+                bubbles.remove(bubble);
             }
         }
     }
@@ -326,12 +326,13 @@ public class BubblesManager {
     
 
     public void destroyBubbles(Bubble cannonBubble) {
+        canvas.remove(cannonBubble);
         Color color = Color.GRAY;
         if (cannonBubble != null){
             color = cannonBubble.getColor();
         }
         Set<Bubble> neighbour = cannonBubble.getNeighbours(canvas);
-        Set<Bubble> updateNeighbour = new HashSet();
+        Set<Bubble> updateNeighbour = new HashSet<>();
         // System.out.println(neighbour);
         Set<Bubble> sameColorBubbles = new HashSet<>();
 
@@ -351,7 +352,6 @@ public class BubblesManager {
         }
         
         sameColorBubbles.add((Bubble)canvas.getElementAt(cannonBubble.getCenterX(), cannonBubble.getCenterY()));
-
         System.out.println(sameColorBubbles);
         
         if (sameColorBubbles.size() >= 3) {
@@ -360,6 +360,7 @@ public class BubblesManager {
                 if (bubble != null){
                     if (bubble.getColor() == color){
                         bubbles.remove(bubble);
+                        listBubble.remove(bubble);
                     }
                 }
                 //bubbles.remove(cannonBubble);
@@ -369,10 +370,19 @@ public class BubblesManager {
                 // canvas.remove(canvas.getElementAt(cannonBubble.getCenter()));
                 // canvas.remove(cannonBubble);
             }
-            canvas.remove(cannonBubble);
-        }else{
-            bubbles.add(new Bubble(cannonBubble.getX(), cannonBubble.getY(), cannonBubble.getWidth(), cannonBubble.getHeight(), cannonBubble.getColor()));
-            canvas.remove(cannonBubble);
+            // canvas.remove(cannonBubble);
+        }
+        destroyFloatingBubble(canvas);
+        // else{
+        //     bubbles.add(new Bubble(cannonBubble.getX(), cannonBubble.getY(), cannonBubble.getWidth(), cannonBubble.getHeight(), cannonBubble.getColor()));
+        //     canvas.remove(cannonBubble);
+        // }
+    }
+    private void destroyFloatingBubble(CanvasWindow canvas){
+        for(Bubble b: listBubble){
+            if(b.getNeighbours(canvas).size()==0){
+                bubbles.remove(b);
+            }
         }
     }
 }
