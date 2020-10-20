@@ -2,14 +2,12 @@ package FrozenBubbles;
 
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+
 
 import edu.macalester.graphics.CanvasWindow;
-import edu.macalester.graphics.GraphicsGroup;
-import edu.macalester.graphics.Point;
-import edu.macalester.graphics.events.MouseButtonEvent;
+
+
+
 
 
 public class FrozenBubblesGame {
@@ -18,11 +16,8 @@ public class FrozenBubblesGame {
     private static final int CANVAS_WIDTH = 600;
     private static final int CANVAS_HEIGHT = 800;
     private static final int SPEED = 50;
-    private static final int CANNON_LENGTH = 40;
 
     private static final int DIAMETER = 30;
-    private static final int ROW = 8;
-    private static final int COLUMN = 20;
 
     private CannonBubble cannonBubble;
     private Cannon cannon;
@@ -37,7 +32,7 @@ public class FrozenBubblesGame {
         cannon = new Cannon(285, 315, 315, 285, 700, 700, 740, 740);
         cannon.setFillColor(Color.BLACK);
 
-        cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, canvas);
+        cannonBubble = new CannonBubble(285, 670, DIAMETER, DIAMETER, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, canvas);
 
         manager = new BubblesManager(canvas);
         manager.generateBubbles();
@@ -58,9 +53,7 @@ public class FrozenBubblesGame {
 
     private void addObjects() {
         canvas.add(cannonBubble);
-        cannonBubble.setCenter(300, 685);
         canvas.add(cannon);
-        cannon.setCenter(300, 720);
     }
 
     private void processGame1() {
@@ -81,8 +74,7 @@ public class FrozenBubblesGame {
 
                     manager.destroyBubbles(newBubble);
                     
-                    // manager.fallBubble();
-                    //manager.updateMap();
+                    manager.fallBubble();
                     cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, canvas);
                     // Color color = getRandomColor();
                     // We do not need to getRandomColor() there because when we create a cannonBubble
@@ -97,40 +89,24 @@ public class FrozenBubblesGame {
         }
     }
 
-    private void processGame2() {
-        if (startBallMoving) {
-            canvas.animate(() -> {
-                if (!cannonBubble.testHit(manager.getGraphicsGroup(),canvas)) {
-                    cannonBubble.updatePosition(0.1, manager.getGraphicsGroup(), canvas);
-                }
+    // private void processGame2() {
+    //     if (startBallMoving) {
+    //         canvas.animate(() -> {
+    //             if (!cannonBubble.testHit(manager.getGraphicsGroup(),canvas)) {
+    //                 cannonBubble.updatePosition(0.1, manager.getGraphicsGroup(), canvas);
+    //             }
 
-            });
+    //         });
 
-            if (cannonBubble.testHit(manager.getGraphicsGroup(),canvas)) {
-                manager.correctCannonBubble(cannonBubble);
+    //         if (cannonBubble.testHit(manager.getGraphicsGroup(),canvas)) {
+    //             manager.correctCannonBubble(cannonBubble);
 
-                //manager.updateMap();
-                cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, canvas);
-                canvas.add(cannonBubble);
-            }
-        }
-    };
-
-
-    private Color getRandomColor() {
-        Random rand = new Random();
-        int i = rand.nextInt(4);
-        if (i == 0) {
-            return Color.RED;
-        } else if (i == 1) {
-            return Color.YELLOW;
-        } else if (i == 2) {
-            return Color.GREEN;
-        } else {
-            return Color.BLUE;
-        }
-    }
-
+    //             //manager.updateMap();
+    //             cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, canvas);
+    //             canvas.add(cannonBubble);
+    //         }
+    //     }
+    // };
     private void setBoolean() {
         startBallMoving = true;
     }

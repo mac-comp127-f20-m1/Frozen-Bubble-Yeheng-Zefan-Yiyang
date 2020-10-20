@@ -12,7 +12,6 @@ import java.awt.Color;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsGroup;
-import edu.macalester.graphics.GraphicsObject;
 import edu.macalester.graphics.Point;
 
 public class BubblesManager {
@@ -130,7 +129,6 @@ public class BubblesManager {
     public void correctCannonBubble(CannonBubble cannonBubble) {
         double currentY = cannonBubble.getY();
         double currentX = cannonBubble.getX();
-        Color currentColor = cannonBubble.getColor();
         double supposedY = yPosition.stream().min(Comparator.comparing(y -> Math.abs(y - currentY))).orElse(null);
         double i = supposedY / 27.5;
 
@@ -308,15 +306,23 @@ public class BubblesManager {
     //     }
     // }
 
-    public void fallBubble(){
+    private List<Bubble> floatingBubblesList(){
+        List<Bubble> floatingBubbles = new ArrayList<>();
         for (Bubble bubble : listBubble){
             if (bubble.getNeighbours(canvas).size() == 0){
-                bubbles.remove(bubble);
+                floatingBubbles.add(bubble);
             }
+        }
+        return floatingBubbles;
+    }
+    public void fallBubble(){
+        for(Bubble b: floatingBubblesList()){
+            bubbles.remove(b);
+            listBubble.remove(b);
         }
     }
 
-    public void addBubble(Bubble bubble){
+    public void addBubble (Bubble bubble){
         bubbles.add(bubble);
     }
 
@@ -358,21 +364,20 @@ public class BubblesManager {
             for (Bubble bubble : sameColorBubbles) {
                 // canvas.remove(bubble);
                 if (bubble != null){
-                    if (bubble.getColor() == color){
+                    // if (bubble.getColor() == color){
                         bubbles.remove(bubble);
                         listBubble.remove(bubble);
-                    }
+                    // }
                 }
                 //bubbles.remove(cannonBubble);
                 // canvas.remove(cannonBubble);
-                // 这玩意也有问题，虽然他能消除同色bubble，但消除不了覆盖cannonbubble的新Bubble，
                 
                 // canvas.remove(canvas.getElementAt(cannonBubble.getCenter()));
                 // canvas.remove(cannonBubble);
             }
             // canvas.remove(cannonBubble);
         }
-        destroyFloatingBubble(canvas);
+        // destroyFloatingBubble(canvas);
         // else{
         //     bubbles.add(new Bubble(cannonBubble.getX(), cannonBubble.getY(), cannonBubble.getWidth(), cannonBubble.getHeight(), cannonBubble.getColor()));
         //     canvas.remove(cannonBubble);
@@ -382,6 +387,7 @@ public class BubblesManager {
         for(Bubble b: listBubble){
             if(b.getNeighbours(canvas).size()==0){
                 bubbles.remove(b);
+                // listBubble.remove(b);
             }
         }
     }

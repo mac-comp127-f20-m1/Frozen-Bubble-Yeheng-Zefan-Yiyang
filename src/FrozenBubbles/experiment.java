@@ -10,7 +10,7 @@ public class experiment {
         Ellipse ball2 = new Ellipse(130, 100,30,30);
         canvas.add(ball);
         canvas.add(ball2);
-        // System.out.println(canvas.getElementAt(115,115));
+        System.out.println(canvas.getElementAt(130.1,115));
     }
         
     }

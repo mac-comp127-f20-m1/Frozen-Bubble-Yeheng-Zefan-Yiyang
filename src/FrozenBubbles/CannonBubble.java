@@ -3,13 +3,13 @@ package FrozenBubbles;
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;
 import edu.macalester.graphics.GraphicsGroup;
-import edu.macalester.graphics.GraphicsObject;
+
 import edu.macalester.graphics.Point;
 
-import java.util.ArrayList;
-import java.util.Collection;
+
+
 import java.util.HashSet;
-import java.util.List;
+
 import java.util.Random;
 import java.util.Set;
 import java.awt.Color;
@@ -26,7 +26,6 @@ public class CannonBubble extends Ellipse{
     private double xMaxPosition;
     private double yMaxPosition;
 
-    private double degree;
     private double speed;
 
     private double width;
@@ -53,7 +52,7 @@ public class CannonBubble extends Ellipse{
         this.color = colorRandom;
 
         canvas.onClick(event->setVelocity(setDegree(event.getPosition())));
-        // not sure if it is better to use onClick.() or onMouseDown.()
+        
         
 
 
