@@ -1,11 +1,10 @@
 package FrozenBubbles;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.awt.Color;
@@ -23,6 +22,7 @@ public class BubblesManager {
     private static final int COLUMN = 20;
     private static final int DIAMETER = 30;
     private static final int MAX_RAW = 25;
+    
 
     private List<Double> evenLineXPosition = new ArrayList<>();
     private List<Double> oddLineXPosition = new ArrayList<>();
@@ -30,12 +30,13 @@ public class BubblesManager {
     private List<Double> oddLineYPosition = new ArrayList<>();
     private List<Double> yPosition = new ArrayList<>();
     private List<Point> points = new ArrayList<>();
-    private List<Bubble> bubbleAround = new ArrayList<>();
+    private List<Point> pList = new ArrayList<>();
+    private List<Point> allPoints;
+    
 
     private List<List<Double>> listBubblePosition = new ArrayList<>();
     private List<Bubble> listBubble = new ArrayList<>();
 
-    private Map<Bubble, List<Bubble>> map = new HashMap<>();
 
     public BubblesManager(CanvasWindow canvas) {
 
@@ -98,12 +99,14 @@ public class BubblesManager {
                 points.add(oddLinePoint);
             }
         }
+        canvas.add(bubbles);
         // System.out.println("evenX"+evenLineXPosition);
         // System.out.println("oddX"+oddLineXPosition);
         // System.out.println("y"+yPosition);
-        // System.out.println("Point"+points);
-
-        canvas.add(bubbles);
+        for(Point p : points){
+            pList.add(p);
+        }
+        allPoints = getUnmodifiedPointList();
     }
 
 
@@ -124,6 +127,9 @@ public class BubblesManager {
     public GraphicsGroup getGraphicsGroup() {
         return bubbles;
     }
+    private List<Point> getUnmodifiedPointList(){
+        return Collections.unmodifiableList(pList);
+    }
 
 
     public void correctCannonBubble(CannonBubble cannonBubble) {
@@ -131,8 +137,7 @@ public class BubblesManager {
         double currentX = cannonBubble.getX();
         double supposedY = yPosition.stream().min(Comparator.comparing(y -> Math.abs(y - currentY))).orElse(null);
         double i = supposedY / 27.5;
-
-
+        
         if (i % 2 == 0) {
             double supposedX = evenLineXPosition.stream().min(Comparator.comparing(x -> Math.abs(x - currentX)))
                 .orElse(null);
@@ -157,169 +162,64 @@ public class BubblesManager {
             cannonBubble.setPosition(supposedPoint);
 
         }
-        // Bubble newBubble = new Bubble(cannonBubble.getX(), cannonBubble.getY(), cannonBubble.getWidth(),
-        //     cannonBubble.getHeight(), cannonBubble.getColor());
-        //     // System.out.println("currentcolor is "+ currentColor);
-        //     // System.out.println("cannonBubble.getColor() is "+cannonBubble.getColor());
-        //     // System.out.println(newBubble.getColor());
-        // canvas.add(newBubble);
-        // canvas.remove(cannonBubble);
-        // bubbles.add(newBubble);
-        // listBubble.add(newBubble);
-        // listBubblePosition.add(List.of(cannonBubble.getX(), cannonBubble.getY()));
     }
+    
 
-    // public void updateMap() {
-    //     // List<Bubble> bubbleAround = new ArrayList<>();
-    //     Bubble bubble = listBubble.get(listBubble.size() - 1);
-    //     if (bubbles.getElementAt(bubble.getX() - DIAMETER, bubble.getY()) != null) {
-    //         for (int i = 0; i < listBubble.size(); i++) {
-    //             if (listBubblePosition.get(i).get(0) == bubble.getX() - DIAMETER
-    //                 && listBubblePosition.get(i).get(1) == bubble.getY()) {
-    //                 bubbleAround.add(listBubble.get(i));
-    //             }
-    //         }
-    //     }
-    //     if (bubbles.getElementAt(bubble.getX() + DIAMETER, bubble.getY()) != null) {
-    //         for (int i = 0; i < listBubble.size(); i++) {
-    //             if (listBubblePosition.get(i).get(0) == bubble.getX() + DIAMETER
-    //                 && listBubblePosition.get(i).get(1) == bubble.getY()) {
-    //                 bubbleAround.add(listBubble.get(i));
-    //             }
-    //         }
-    //     }
-    //     if (bubbles.getElementAt(bubble.getX() - DIAMETER * 0.5, (bubble.getY() - DIAMETER + 2.5)) != null) {
-    //         for (int i = 0; i < listBubble.size(); i++) {
-    //             if (listBubblePosition.get(i).get(0) == bubble.getX() - 0.5 * DIAMETER
-    //                 && listBubblePosition.get(i).get(1) == (bubble.getY() - DIAMETER + 2.5)) {
-    //                 bubbleAround.add(listBubble.get(i));
-    //             }
-    //         }
-    //     }
-    //     if (bubbles.getElementAt(bubble.getX() - DIAMETER * 0.5, (bubble.getY() + DIAMETER - 2.5)) != null) {
-    //         for (int i = 0; i < listBubble.size(); i++) {
-    //             if (listBubblePosition.get(i).get(0) == bubble.getX() - DIAMETER * 0.5
-    //                 && listBubblePosition.get(i).get(1) == bubble.getY() + DIAMETER - 2.5) {
-    //                 bubbleAround.add(listBubble.get(i));
-    //             }
-    //         }
-    //     }
-    //     if (bubbles.getElementAt(bubble.getX() + DIAMETER * 0.5, (bubble.getY() - DIAMETER + 2.5)) != null) {
-    //         for (int i = 0; i < listBubble.size(); i++) {
-    //             if (listBubblePosition.get(i).get(0) == bubble.getX() + 0.5 * DIAMETER
-    //                 && listBubblePosition.get(i).get(1) == bubble.getY() - DIAMETER + 2.5) {
-    //                 bubbleAround.add(listBubble.get(i));
-    //             }
-    //         }
-    //     }
-    //     if (bubbles.getElementAt(bubble.getX() + DIAMETER * 0.5, (bubble.getY() + DIAMETER - 2.5)) != null) {
-    //         for (int i = 0; i < listBubble.size(); i++) {
-    //             if (listBubblePosition.get(i).get(0) == bubble.getX() + 0.5 * DIAMETER
-    //                 && listBubblePosition.get(i).get(1) == bubble.getY() + DIAMETER - 2.5) {
-    //                 bubbleAround.add(listBubble.get(i));
-    //             }
-    //         }
-    //     }
-    //     map.put(bubble, bubbleAround);
-    // }
-
-
-    // public Map<Bubble, List<Bubble>> createInitialMap() {
-    //     for (Bubble bubble : listBubble) {
-    //         // List<Bubble> bubbleAround = new ArrayList<>();
-    //         if (bubbles.getElementAt(bubble.getX() - DIAMETER, bubble.getY()) != null) {
-    //             for (int i = 0; i < listBubble.size(); i++) {
-    //                 if (listBubblePosition.get(i).get(0) == bubble.getX() - DIAMETER
-    //                     && listBubblePosition.get(i).get(1) == bubble.getY()) {
-    //                     bubbleAround.add(listBubble.get(i));
-    //                 }
-    //             }
-    //         }
-    //         if (bubbles.getElementAt(bubble.getX() + DIAMETER, bubble.getY()) != null) {
-    //             for (int i = 0; i < listBubble.size(); i++) {
-    //                 if (listBubblePosition.get(i).get(0) == bubble.getX() + DIAMETER
-    //                     && listBubblePosition.get(i).get(1) == bubble.getY()) {
-    //                     bubbleAround.add(listBubble.get(i));
-    //                 }
-    //             }
-    //         }
-    //         if (bubbles.getElementAt(bubble.getX() - DIAMETER * 0.5, (bubble.getY() - DIAMETER + 2.5)) != null) {
-    //             for (int i = 0; i < listBubble.size(); i++) {
-    //                 if (listBubblePosition.get(i).get(0) == bubble.getX() - 0.5 * DIAMETER
-    //                     && listBubblePosition.get(i).get(1) == (bubble.getY() - DIAMETER + 2.5)) {
-    //                     bubbleAround.add(listBubble.get(i));
-    //                 }
-    //             }
-    //         }
-    //         if (bubbles.getElementAt(bubble.getX() - DIAMETER * 0.5, (bubble.getY() + DIAMETER - 2.5)) != null) {
-    //             for (int i = 0; i < listBubble.size(); i++) {
-    //                 if (listBubblePosition.get(i).get(0) == bubble.getX() - DIAMETER * 0.5
-    //                     && listBubblePosition.get(i).get(1) == bubble.getY() + DIAMETER - 2.5) {
-    //                     bubbleAround.add(listBubble.get(i));
-    //                 }
-    //             }
-    //         }
-    //         if (bubbles.getElementAt(bubble.getX() + DIAMETER * 0.5, (bubble.getY() - DIAMETER + 2.5)) != null) {
-    //             for (int i = 0; i < listBubble.size(); i++) {
-    //                 if (listBubblePosition.get(i).get(0) == bubble.getX() + 0.5 * DIAMETER
-    //                     && listBubblePosition.get(i).get(1) == bubble.getY() - DIAMETER + 2.5) {
-    //                     bubbleAround.add(listBubble.get(i));
-    //                 }
-    //             }
-    //         }
-    //         if (bubbles.getElementAt(bubble.getX() + DIAMETER * 0.5, (bubble.getY() + DIAMETER - 2.5)) != null) {
-    //             for (int i = 0; i < listBubble.size(); i++) {
-    //                 if (listBubblePosition.get(i).get(0) == bubble.getX() + 0.5 * DIAMETER
-    //                     && listBubblePosition.get(i).get(1) == bubble.getY() + DIAMETER - 2.5) {
-    //                     bubbleAround.add(listBubble.get(i));
-    //                 }
-    //             }
-    //         }
-    //         map.put(bubble, bubbleAround);
-    //     }
-    //     return map;
-    // }
-
-    // public Map<Bubble, List<Bubble>> getMap() {
-    //     return map;
-    // }
-
-    // public void ballCancel(CannonBubble cannonBubble, List<Bubble> sameColorWithCannonball, List<Bubble> visited) {
-    //     for (int i = 0; i < bubbleAround.size(); i++) {
-    //         if (bubbleAround.get(i) != null && cannonBubble != null){
-    //             if (bubbleAround.get(i).getColor() == cannonBubble.getColor()) {
-    //                 sameColorWithCannonball.add(bubbleAround.get(i));
-    //                 bubbleAround.remove(i);
-    //                 return;
-    //             } else if (bubbleAround.get(i).getColor() != cannonBubble.getColor()) {
-    //                 visited.add(bubbleAround.get(i));
-    //                 return;
-    //             }
-    //             for (Bubble bubble : sameColorWithCannonball) {
-    //                 map.get(bubble);
-    //                 ballCancel(cannonBubble, sameColorWithCannonball, visited);
-    //                 if (sameColorWithCannonball.size() >= 3) {
-    //                     canvas.remove(cannonBubble);
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
-
-    private List<Bubble> floatingBubblesList(){
-        List<Bubble> floatingBubbles = new ArrayList<>();
+    private Set<Bubble> floatingBubble(){
+        Set<Bubble> floatingBubbles = new HashSet<>();
+        System.out.println("aaaaaaaaaaaaaaaaaaaa");
         for (Bubble bubble : listBubble){
-            if (bubble.getNeighbours(canvas).size() == 0){
+            Set<Bubble>neighbour = bubble.getNeighbours(canvas);
+            // Set<Bubble> updateNeighbour = new HashSet<>();
+            // Set<Bubble> potentialFloatingBubbles = new HashSet<>();
+            // Set<Bubble> visitedBubbles = new HashSet<>();
+            if (neighbour.size() == 0){
                 floatingBubbles.add(bubble);
             }
+            if(neighbour.size()==1){
+                for(Bubble b: neighbour){
+                    if(b.getNeighbours(canvas).size()==1){
+                        floatingBubbles.add(b);
+                        floatingBubbles.add(bubble);
+                    }
+                }
+            }
+            // else{
+            //     potentialFloatingBubbles.add(bubble);
+            //     visitedBubbles.add(bubble);
+            //     while(neighbour.size()!=0){
+            //         // 这个while的condition不对！我这个写出来是无限循环的loop！
+            //         // 我的想法是如果visit过的所有bubble的集合等于这些bubble的所有neighbour的（重复neighbour留一个）
+            //         // 集合，这些visit过的bubble就独立，就要掉下去。但我。。。实在没想明白该怎么写。。。
+            //         updateNeighbour = neighbour;
+            //         neighbour = new HashSet<>();
+            //         for(Bubble b: updateNeighbour){
+            //             if(!potentialFloatingBubbles.contains(b)){
+            //                 potentialFloatingBubbles.add(b);
+            //             }
+            //             if(!visitedBubbles.contains(b)){
+            //                 visitedBubbles.add(b);
+            //             }
+            //             for (Bubble bubbleNeighbour : b.getNeighbours(canvas)){
+            //                 neighbour.add(bubbleNeighbour);
+            //             }
+            //         }
+            //     }
+            //     if(potentialFloatingBubbles.equals(visitedBubbles)){
+            //         for(Bubble fBubble:potentialFloatingBubbles){
+            //             floatingBubble().add(fBubble);
+            //         }
+            //     }
+            // }
         }
         return floatingBubbles;
     }
     public void fallBubble(){
-        for(Bubble b: floatingBubblesList()){
+        for(Bubble b: floatingBubble()){
             bubbles.remove(b);
             listBubble.remove(b);
         }
+        System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbb");
     }
 
     public void addBubble (Bubble bubble){
@@ -358,7 +258,7 @@ public class BubblesManager {
         }
         
         sameColorBubbles.add((Bubble)canvas.getElementAt(cannonBubble.getCenterX(), cannonBubble.getCenterY()));
-        System.out.println(sameColorBubbles);
+        // System.out.println(sameColorBubbles);
         
         if (sameColorBubbles.size() >= 3) {
             for (Bubble bubble : sameColorBubbles) {
@@ -383,12 +283,14 @@ public class BubblesManager {
         //     canvas.remove(cannonBubble);
         // }
     }
-    private void destroyFloatingBubble(CanvasWindow canvas){
-        for(Bubble b: listBubble){
-            if(b.getNeighbours(canvas).size()==0){
-                bubbles.remove(b);
-                // listBubble.remove(b);
+    
+    public void updatePointList(CanvasWindow canvas){
+        System.out.println("the size of pList is "+allPoints.size());
+        for(Point p :allPoints){
+            if(canvas.getElementAt(p.getX()+DIAMETER/2, p.getY()+DIAMETER/2)==null&&points.contains(p)==false){
+                points.add(p);
             }
         }
+        System.out.println("The size of points is "+points.size());
     }
 }

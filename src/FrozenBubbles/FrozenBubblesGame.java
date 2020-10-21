@@ -27,8 +27,7 @@ public class FrozenBubblesGame {
     public FrozenBubblesGame() {
 
         canvas = new CanvasWindow("FrozenBubble", CANVAS_WIDTH, CANVAS_HEIGHT);
-        // mouseLayer = new GraphicsGroup();
-        // canvas.add(mouseLayer);
+        
         cannon = new Cannon(285, 315, 315, 285, 700, 700, 740, 740);
         cannon.setFillColor(Color.BLACK);
 
@@ -36,7 +35,7 @@ public class FrozenBubblesGame {
 
         manager = new BubblesManager(canvas);
         manager.generateBubbles();
-        //manager.createInitialMap();
+       
 
     }
 
@@ -62,6 +61,7 @@ public class FrozenBubblesGame {
                 if (!cannonBubble.testHit(manager.getGraphicsGroup(),canvas)) {
                     cannonBubble.updatePosition(0.1, manager.getGraphicsGroup(), canvas);
                 } else {
+                    // 小问题：else{}和if(cannonBubble.xVelocity() == 0){}是不是一个意思啊
                     manager.correctCannonBubble(cannonBubble);
                     
 
@@ -71,10 +71,9 @@ public class FrozenBubblesGame {
                     canvas.remove(cannonBubble);
                     manager.addBubble(newBubble);
                     manager.addBubbleToList(newBubble);
-
                     manager.destroyBubbles(newBubble);
-                    
                     manager.fallBubble();
+                    manager.updatePointList(canvas);
                     cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, canvas);
                     // Color color = getRandomColor();
                     // We do not need to getRandomColor() there because when we create a cannonBubble
