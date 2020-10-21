@@ -99,7 +99,7 @@ public class CannonBubble extends Ellipse {
     public boolean testHit(GraphicsGroup bubbles, CanvasWindow canvas) {
         for (int i = 0; i < 360; i++) {
             if (bubbles.getElementAt((xPosition + 15) + 15.1 * Math.cos(i * Math.PI / 180),
-                (yPosition + 15) + 15.1 * Math.sin(i * Math.PI / 180) + 0.01) != null||yPosition<=15) {
+                (yPosition + 15) + 15.1 * Math.sin(i * Math.PI / 180) + 0.01) != null || yPosition <= 15) {
                     // 我还是很困惑我不知道写的对不对。。。
                 xVelocity = 0;
                 yVelocity = 0;

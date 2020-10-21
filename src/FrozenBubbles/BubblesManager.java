@@ -170,13 +170,12 @@ public class BubblesManager {
         System.out.println("aaaaaaaaaaaaaaaaaaaa");
         for (Bubble bubble : listBubble){
             Set<Bubble>neighbour = bubble.getNeighbours(canvas);
-            // Set<Bubble> updateNeighbour = new HashSet<>();
-            // Set<Bubble> potentialFloatingBubbles = new HashSet<>();
-            // Set<Bubble> visitedBubbles = new HashSet<>();
+            Set<Bubble> updateNeighbour = new HashSet<>();
+            //Set<Bubble> potentialFloatingBubbles = new HashSet<>();
+            Set<Bubble> visitedBubbles = new HashSet<>();
             if (neighbour.size() == 0){
                 floatingBubbles.add(bubble);
-            }
-            if(neighbour.size()==1){
+            }else if(neighbour.size()==1){
                 for(Bubble b: neighbour){
                     if(b.getNeighbours(canvas).size()==1){
                         floatingBubbles.add(b);
@@ -184,6 +183,37 @@ public class BubblesManager {
                     }
                 }
             }
+            else{
+                visitedBubbles.add(bubble);
+                for (Bubble b: neighbour){
+                    visitedBubbles.add(b);
+                }
+                updateNeighbour.add(bubble);
+                while (updateNeighbour != visitedBubbles){
+                    updateNeighbour = visitedBubbles;
+                    for (Bubble b : visitedBubbles){
+                        for (Bubble bNeighbour : b.getNeighbours(canvas)){
+                            if (!visitedBubbles.contains(bNeighbour)){
+                                visitedBubbles.add(bNeighbour);
+                            }
+                        }
+                    }
+                    //System.out.println("up" + updateNeighbour);
+                    //System.out.println("vis" + visitedBubbles);
+                }
+                int count = 0;
+                for (Bubble b : visitedBubbles){
+                    if (b.getX() == 0 || b.getY() == 0 || b.getX() == canvas.getWidth() - 30){
+                        count = 1;
+                    }
+                }
+                if (count == 0){
+                    for (Bubble b : visitedBubbles){
+                        bubbles.remove(b);
+                    }
+                }
+            }
+
             // else{
             //     potentialFloatingBubbles.add(bubble);
             //     visitedBubbles.add(bubble);
