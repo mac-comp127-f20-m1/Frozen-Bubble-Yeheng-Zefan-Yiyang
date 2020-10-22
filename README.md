@@ -1,3 +1,3 @@
-# Project Title Goes Here
+# Frozen Bubbles
 
-Info about your project goes here
+We make a Frozen Bubble game.
