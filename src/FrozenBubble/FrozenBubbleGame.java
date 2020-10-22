@@ -11,7 +11,7 @@
  * 
  * We thank Professor Paul Cantrell for helping us with the approriate use of OnClick()
  */
-package FrozenBubbles;
+package FrozenBubble;
 
 import java.awt.Color;
 
@@ -19,7 +19,7 @@ import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.ui.Button;
 
-public class FrozenBubblesGame {
+public class FrozenBubbleGame {
     public CanvasWindow canvas;
 
     private static final int CANVAS_WIDTH = 600;
@@ -29,16 +29,16 @@ public class FrozenBubblesGame {
 
     private CannonBubble cannonBubble;
     private Cannon cannon;
-    private BubblesManager manager;
+    private BubbleManager manager;
     private GraphicsGroup buttonLayer;
-    private FrozenBubblesGame frozenBubblesGame;
+    private FrozenBubbleGame frozenBubblesGame;
 
     private boolean startBallMoving;
 
     /**
      * Initialize the canvas, cannon bubble, and the bubble manager
      */
-    public FrozenBubblesGame() {
+    public FrozenBubbleGame() {
 
         canvas = new CanvasWindow("FrozenBubble", CANVAS_WIDTH, CANVAS_HEIGHT);
 
@@ -50,7 +50,7 @@ public class FrozenBubblesGame {
         // The println method makes sure palyers can still know the cannonBubble's color
         // even if the computer screen does not show the whole canvas window.
 
-        manager = new BubblesManager(canvas);
+        manager = new BubbleManager(canvas);
         manager.generateBubbles();
 
         buttonLayer = new GraphicsGroup();
@@ -61,7 +61,7 @@ public class FrozenBubblesGame {
     }
 
     public static void main(String[] args) {
-        FrozenBubblesGame frozenBubblesGame = new FrozenBubblesGame();
+        FrozenBubbleGame frozenBubblesGame = new FrozenBubbleGame();
         frozenBubblesGame.run();
     }
 
@@ -145,7 +145,7 @@ public class FrozenBubblesGame {
         buttonLayer.add(resetGameButton);
         resetGameButton.setPosition(500, 350);
         resetGameButton.onClick(() -> {
-            frozenBubblesGame = new FrozenBubblesGame();
+            frozenBubblesGame = new FrozenBubbleGame();
             frozenBubblesGame.run();
         });
     }

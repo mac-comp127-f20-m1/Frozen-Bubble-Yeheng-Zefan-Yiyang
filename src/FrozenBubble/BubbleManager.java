@@ -12,7 +12,7 @@
  * We thank Professor Paul Cantrell for helping us finishing the algorithm destroying the floating
  * bubbles.
  */
-package FrozenBubbles;
+package FrozenBubble;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,7 +29,7 @@ import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.Point;
 
-public class BubblesManager {
+public class BubbleManager {
 
     private CanvasWindow canvas;
     private GraphicsGroup bubbles;
@@ -56,7 +56,7 @@ public class BubblesManager {
      * 
      * @param canvas the canvas where all the bubbles are at
      */
-    public BubblesManager(CanvasWindow canvas) {
+    public BubbleManager(CanvasWindow canvas) {
         this.canvas = canvas;
         bubbles = new GraphicsGroup();
     }

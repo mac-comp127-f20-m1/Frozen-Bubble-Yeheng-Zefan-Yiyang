@@ -3,7 +3,7 @@
  * 
  * Edited by Zefan Qian.
  */
-package FrozenBubbles;
+package FrozenBubble;
 
 import edu.macalester.graphics.Path;
 import edu.macalester.graphics.Point;

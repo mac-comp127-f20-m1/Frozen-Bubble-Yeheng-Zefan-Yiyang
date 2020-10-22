@@ -11,7 +11,7 @@
  * 
  * Edted by Zefan Qian, Scott Yeheng Zong.
  */
-package FrozenBubbles;
+package FrozenBubble;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;

@@ -7,7 +7,7 @@
  * 
  * Edited by Scott Yehng Zong, Zefan Qian.
  */
-package FrozenBubbles;
+package FrozenBubble;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;
