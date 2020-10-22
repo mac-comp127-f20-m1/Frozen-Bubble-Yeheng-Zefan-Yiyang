@@ -41,6 +41,9 @@ public class CannonBubble extends Ellipse {
     private double width;
     private double height;
 
+    /**
+     * A cannonBubble.
+     */
     public CannonBubble(double x, double y, double width, double height, double speed,
         double xMaxPosition, double yMaxPosition, CanvasWindow canvas) {
 

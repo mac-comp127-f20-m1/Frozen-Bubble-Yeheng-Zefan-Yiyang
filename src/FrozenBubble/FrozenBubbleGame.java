@@ -9,7 +9,7 @@
  * 
  * Edited by Scott Yeheng Zong, Zefan Qian.
  * 
- * We thank Professor Paul Cantrell for helping us with the approriate use of OnClick()
+ * We thank Professor Paul Cantrell for helping us with the approriate use of OnClick().
  */
 package FrozenBubble;
 
@@ -36,7 +36,7 @@ public class FrozenBubbleGame {
     private boolean startBallMoving;
 
     /**
-     * Initialize the canvas, cannon bubble, and the bubble manager
+     * Initialize the canvas, cannon bubble, and the bubble manager.
      */
     public FrozenBubbleGame() {
 
@@ -66,7 +66,7 @@ public class FrozenBubbleGame {
     }
 
     /**
-     * Start the game
+     * Start the game.
      */
     private void run() {
         addObjects();
@@ -74,7 +74,7 @@ public class FrozenBubbleGame {
     }
 
     /**
-     * Add all the initialized objects on the canvas
+     * Add all the initialized objects on the canvas.
      */
     private void addObjects() {
         canvas.add(cannonBubble);
@@ -127,7 +127,7 @@ public class FrozenBubbleGame {
     }
 
     /**
-     * create a button with title "Exit", and the canvas window will be closed if it the button clicked.
+     * Create a button with title "Exit", and the canvas window will be closed if it the button clicked.
      */
     private void createExitButton() {
         Button exitButton = new Button("Exit");
@@ -137,7 +137,7 @@ public class FrozenBubbleGame {
     }
 
     /**
-     * create a button with title "Reset", and the FrozenBubbles game will be reseted if the button is
+     * Create a button with title "Reset", and the FrozenBubbles game will be reseted if the button is
      * clicked.
      */
     private void createResetGameButton() {

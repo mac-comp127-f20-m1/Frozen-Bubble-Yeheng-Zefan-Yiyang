@@ -17,9 +17,7 @@ import java.awt.Color;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Bubble
- */
+
 public class Bubble extends Ellipse {
     private Color color;
     private double xPosition;
@@ -27,6 +25,9 @@ public class Bubble extends Ellipse {
     private double width;
     private double height;
 
+    /**
+     * A Bubble.
+     */
     public Bubble(double x, double y, double width, double height, Color color) {
 
         super(x, y, width, height);
@@ -61,7 +62,7 @@ public class Bubble extends Ellipse {
     }
 
     /**
-     * Find the neighbour bubbles
+     * Find the neighbour bubbles.
      * 
      * @param canvas the canvas where the bubble is at
      * @return the set of the neighboured bubbles

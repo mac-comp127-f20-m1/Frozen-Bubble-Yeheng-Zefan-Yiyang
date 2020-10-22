@@ -194,8 +194,8 @@ public class BubbleManager {
     }
 
     /**
-     * Find bubbles that are connected and floating, (being floating means that all the connected
-     * bubbles do not connect to the walls).
+     * Find bubbles that are connected and floating (being floating means that all the connected bubbles
+     * do not connect to the top wall).
      * 
      * @return a set of bubbles which are connected and floating.
      */
@@ -233,7 +233,7 @@ public class BubbleManager {
     }
 
     /**
-     * Add a bubble to the graphicgroup of all the bubbles
+     * Add a bubble to the graphicgroup of all the bubbles.
      * 
      * @param bubble the bubble will be added
      */
@@ -242,7 +242,7 @@ public class BubbleManager {
     }
 
     /**
-     * Add a bubble to the list of all the bubbles
+     * Add a bubble to the list of all the bubbles.
      * 
      * @param bubble the bubble wiil be added
      */
