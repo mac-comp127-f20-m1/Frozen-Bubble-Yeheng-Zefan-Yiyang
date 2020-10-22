@@ -7,11 +7,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.awt.Color;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.Point;
+
 
 public class BubblesManager {
 
@@ -22,7 +24,7 @@ public class BubblesManager {
     private static final int COLUMN = 20;
     private static final int DIAMETER = 30;
     private static final int MAX_RAW = 25;
-    
+
 
     private List<Double> evenLineXPosition = new ArrayList<>();
     private List<Double> oddLineXPosition = new ArrayList<>();
@@ -32,7 +34,7 @@ public class BubblesManager {
     private List<Point> points = new ArrayList<>();
     private List<Point> pList = new ArrayList<>();
     private List<Point> allPoints;
-    
+
 
     private List<List<Double>> listBubblePosition = new ArrayList<>();
     private List<Bubble> listBubble = new ArrayList<>();
@@ -100,10 +102,7 @@ public class BubblesManager {
             }
         }
         canvas.add(bubbles);
-        // System.out.println("evenX"+evenLineXPosition);
-        // System.out.println("oddX"+oddLineXPosition);
-        // System.out.println("y"+yPosition);
-        for(Point p : points){
+        for (Point p : points) {
             pList.add(p);
         }
         allPoints = getUnmodifiedPointList();
@@ -127,7 +126,8 @@ public class BubblesManager {
     public GraphicsGroup getGraphicsGroup() {
         return bubbles;
     }
-    private List<Point> getUnmodifiedPointList(){
+
+    private List<Point> getUnmodifiedPointList() {
         return Collections.unmodifiableList(pList);
     }
 
@@ -137,7 +137,7 @@ public class BubblesManager {
         double currentX = cannonBubble.getX();
         double supposedY = yPosition.stream().min(Comparator.comparing(y -> Math.abs(y - currentY))).orElse(null);
         double i = supposedY / 27.5;
-        
+
         if (i % 2 == 0) {
             double supposedX = evenLineXPosition.stream().min(Comparator.comparing(x -> Math.abs(x - currentX)))
                 .orElse(null);
@@ -163,164 +163,92 @@ public class BubblesManager {
 
         }
     }
-    
 
-    private Set<Bubble> floatingBubble(){
-        Set<Bubble> floatingBubbles = new HashSet<>();
-        System.out.println("aaaaaaaaaaaaaaaaaaaa");
-        for (Bubble bubble : listBubble){
-            Set<Bubble>neighbour = bubble.getNeighbours(canvas);
-            Set<Bubble> updateNeighbour = new HashSet<>();
-            //Set<Bubble> potentialFloatingBubbles = new HashSet<>();
-            Set<Bubble> visitedBubbles = new HashSet<>();
-            if (neighbour.size() == 0){
-                floatingBubbles.add(bubble);
-            }else if(neighbour.size()==1){
-                for(Bubble b: neighbour){
-                    if(b.getNeighbours(canvas).size()==1){
-                        floatingBubbles.add(b);
-                        floatingBubbles.add(bubble);
-                    }
-                }
-            }
-            else{
-                visitedBubbles.add(bubble);
-                for (Bubble b: neighbour){
-                    visitedBubbles.add(b);
-                }
-                updateNeighbour.add(bubble);
-                while (updateNeighbour != visitedBubbles){
-                    updateNeighbour = visitedBubbles;
-                    for (Bubble b : visitedBubbles){
-                        for (Bubble bNeighbour : b.getNeighbours(canvas)){
-                            if (!visitedBubbles.contains(bNeighbour)){
-                                visitedBubbles.add(bNeighbour);
-                            }
-                        }
-                    }
-                    //System.out.println("up" + updateNeighbour);
-                    //System.out.println("vis" + visitedBubbles);
-                }
-                int count = 0;
-                for (Bubble b : visitedBubbles){
-                    if (b.getX() == 0 || b.getY() == 0 || b.getX() == canvas.getWidth() - 30){
-                        count = 1;
-                    }
-                }
-                if (count == 0){
-                    for (Bubble b : visitedBubbles){
-                        bubbles.remove(b);
-                    }
-                }
-            }
 
-            // else{
-            //     potentialFloatingBubbles.add(bubble);
-            //     visitedBubbles.add(bubble);
-            //     while(neighbour.size()!=0){
-            //         // 这个while的condition不对！我这个写出来是无限循环的loop！
-            //         // 我的想法是如果visit过的所有bubble的集合等于这些bubble的所有neighbour的（重复neighbour留一个）
-            //         // 集合，这些visit过的bubble就独立，就要掉下去。但我。。。实在没想明白该怎么写。。。
-            //         updateNeighbour = neighbour;
-            //         neighbour = new HashSet<>();
-            //         for(Bubble b: updateNeighbour){
-            //             if(!potentialFloatingBubbles.contains(b)){
-            //                 potentialFloatingBubbles.add(b);
-            //             }
-            //             if(!visitedBubbles.contains(b)){
-            //                 visitedBubbles.add(b);
-            //             }
-            //             for (Bubble bubbleNeighbour : b.getNeighbours(canvas)){
-            //                 neighbour.add(bubbleNeighbour);
-            //             }
-            //         }
-            //     }
-            //     if(potentialFloatingBubbles.equals(visitedBubbles)){
-            //         for(Bubble fBubble:potentialFloatingBubbles){
-            //             floatingBubble().add(fBubble);
-            //         }
-            //     }
-            // }
+    private Set<Bubble> getFloatingBubble() {
+        Set<Bubble> topBubble = new HashSet<>();
+        Set<Bubble> allBubbles = new HashSet<>(listBubble);;
+        Set<Bubble> floatingBubble = new HashSet<>(allBubbles);
+        
+        for (Bubble bubble : listBubble) {
+            if(bubble.getY()==0){
+                topBubble.add(bubble);
+            }
         }
-        return floatingBubbles;
+
+
+        Set<Bubble> connectedBubbles = findConnectedBubbles(topBubble, null);
+        for(Bubble b:connectedBubbles){
+            floatingBubble.remove(b);
+        }
+        
+        return floatingBubble;
+        
     }
-    public void fallBubble(){
-        for(Bubble b: floatingBubble()){
+
+    public void fallBubble() {
+        for (Bubble b : getFloatingBubble()) {
             bubbles.remove(b);
             listBubble.remove(b);
         }
-        System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbb");
+        
     }
 
-    public void addBubble (Bubble bubble){
+    public void addBubble(Bubble bubble) {
         bubbles.add(bubble);
     }
 
-    public void addBubbleToList(Bubble bubble){
+    public void addBubbleToList(Bubble bubble) {
         listBubble.add(bubble);
     }
-    
+
 
     public void destroyBubbles(Bubble cannonBubble) {
-        canvas.remove(cannonBubble);
-        Color color = Color.GRAY;
-        if (cannonBubble != null){
-            color = cannonBubble.getColor();
-        }
-        Set<Bubble> neighbour = cannonBubble.getNeighbours(canvas);
-        Set<Bubble> updateNeighbour = new HashSet<>();
-        // System.out.println(neighbour);
+        // Color color = Color.GRAY;
+        // if (cannonBubble != null) {
+        //     color = cannonBubble.getColor();
+        // }我觉得这些可以删？
+        Color color = cannonBubble.getColor();
         Set<Bubble> sameColorBubbles = new HashSet<>();
-
-        while (neighbour.size() != 0){
-            updateNeighbour = neighbour;
-            neighbour = new HashSet<>();
-            for (Bubble bubble : updateNeighbour) {
-                if (bubble != null && bubble.getColor() == color && !sameColorBubbles.contains(bubble)) {
-                    sameColorBubbles.add(bubble);
-                    for (Bubble bubbleNeighbour : bubble.getNeighbours(canvas)){
-                        neighbour.add(bubbleNeighbour);
-                        bubbleNeighbour.getNeighbours(canvas).remove(bubble);
-                    }
-
-                }
-            }
-        }
-        
-        sameColorBubbles.add((Bubble)canvas.getElementAt(cannonBubble.getCenterX(), cannonBubble.getCenterY()));
-        // System.out.println(sameColorBubbles);
-        
+        sameColorBubbles = findConnectedBubbles(Set.of(cannonBubble), color);
         if (sameColorBubbles.size() >= 3) {
             for (Bubble bubble : sameColorBubbles) {
-                // canvas.remove(bubble);
-                if (bubble != null){
-                    // if (bubble.getColor() == color){
-                        bubbles.remove(bubble);
-                        listBubble.remove(bubble);
-                    // }
-                }
-                //bubbles.remove(cannonBubble);
-                // canvas.remove(cannonBubble);
-                
-                // canvas.remove(canvas.getElementAt(cannonBubble.getCenter()));
-                // canvas.remove(cannonBubble);
+                // if (bubble != null) {这个if statement是不是也可以删？只保留里面的东西就行
+                    bubbles.remove(bubble);
+                    listBubble.remove(bubble);
+                // }
             }
-            // canvas.remove(cannonBubble);
         }
-        // destroyFloatingBubble(canvas);
-        // else{
-        //     bubbles.add(new Bubble(cannonBubble.getX(), cannonBubble.getY(), cannonBubble.getWidth(), cannonBubble.getHeight(), cannonBubble.getColor()));
-        //     canvas.remove(cannonBubble);
-        // }
     }
-    
-    public void updatePointList(CanvasWindow canvas){
-        System.out.println("the size of pList is "+allPoints.size());
-        for(Point p :allPoints){
-            if(canvas.getElementAt(p.getX()+DIAMETER/2, p.getY()+DIAMETER/2)==null&&points.contains(p)==false){
+    private Set<Bubble> findConnectedBubbles(Set<Bubble> startBubble, Color color) {
+        Set<Bubble> connected = new HashSet<>(startBubble);
+        Set<Bubble> bubblesToVisit = startBubble.stream()
+            .flatMap(bubble -> bubble.getNeighbours(canvas).stream())
+            .collect(Collectors.toSet());
+
+        while (bubblesToVisit.size() != 0){
+            Set<Bubble> currentBubbleFroup = bubblesToVisit;
+            bubblesToVisit = new HashSet<>();
+            for (Bubble bubble : currentBubbleFroup) {
+                if (color == null || bubble.getColor() == color) {
+                    if (bubble != null && !connected.contains(bubble)) {
+                        connected.add(bubble);
+                        for (Bubble neighbourBubble : bubble.getNeighbours(canvas)){
+                            bubblesToVisit.add(neighbourBubble);
+                            neighbourBubble.getNeighbours(canvas).remove(bubble);
+                        }
+                    }
+                }
+            }
+        }
+        return connected;
+    }
+    public void updatePointList(CanvasWindow canvas) {
+        for (Point p : allPoints) {
+            if (canvas.getElementAt(p.getX() + DIAMETER / 2, p.getY() + DIAMETER / 2) == null
+                && points.contains(p) == false) {
                 points.add(p);
             }
         }
-        System.out.println("The size of points is "+points.size());
     }
 }

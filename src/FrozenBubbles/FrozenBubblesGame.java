@@ -60,14 +60,15 @@ public class FrozenBubblesGame {
             canvas.animate(() -> {
                 if (!cannonBubble.testHit(manager.getGraphicsGroup(),canvas)) {
                     cannonBubble.updatePosition(0.1, manager.getGraphicsGroup(), canvas);
-                } else {
-                    // 小问题：else{}和if(cannonBubble.xVelocity() == 0){}是不是一个意思啊
+                }
+                
+                else{
+                    
                     manager.correctCannonBubble(cannonBubble);
                     
 
                     Bubble newBubble = new Bubble(cannonBubble.getX(), cannonBubble.getY(), cannonBubble.getWidth(),
                     cannonBubble.getHeight(), cannonBubble.getColor());
-                    canvas.add(newBubble);
                     canvas.remove(cannonBubble);
                     manager.addBubble(newBubble);
                     manager.addBubbleToList(newBubble);
@@ -75,11 +76,6 @@ public class FrozenBubblesGame {
                     manager.fallBubble();
                     manager.updatePointList(canvas);
                     cannonBubble = new CannonBubble(285, 670, 30, 30, SPEED, CANVAS_WIDTH, CANVAS_HEIGHT, canvas);
-                    // Color color = getRandomColor();
-                    // We do not need to getRandomColor() there because when we create a cannonBubble
-                    // it already give the cannonBubble a color.
-                    // cannonBubble.setFillColor(color);
-                    // System.out.println("randomnization is "+color);
                     System.out.println("new cannBubble color is"+cannonBubble.getColor());
                     canvas.add(cannonBubble);
                 }
