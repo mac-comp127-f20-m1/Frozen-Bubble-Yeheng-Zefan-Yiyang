@@ -1,15 +1,15 @@
 /**
- * This class create the cannon bubble with the input x position and y position of the upper left, the width, 
- * the height, and the color.
+ * This class create the cannon bubble with the input x position and y position of the upper left,
+ * the width, the height, and the color.
  * 
- * The CannonBubble class extends the Ellipse, so it can be treated as a GraphicsObject, specifically Ellipse, 
- * on the canvas.
+ * The CannonBubble class extends the Ellipse, so it can be treated as a GraphicsObject,
+ * specifically Ellipse, on the canvas.
  * 
- * Specifically, this class includes algorithms updating the position of the cannon bubble and testing whether 
- * the cannon bubble hits the walls or the bubbles. The update of the position will be influenced after the 
- * cannon bubble hits the walls or the bubbles.
+ * Specifically, this class includes algorithms updating the position of the cannon bubble and
+ * testing whether the cannon bubble hits the walls or the bubbles. The update of the position will
+ * be influenced after the cannon bubble hits the walls or the bubbles.
  * 
- * Edted by Zefan Qian, Scott Zong.
+ * Edted by Zefan Qian, Scott Yeheng Zong.
  */
 package FrozenBubbles;
 
@@ -42,7 +42,7 @@ public class CannonBubble extends Ellipse {
     private double height;
 
     public CannonBubble(double x, double y, double width, double height, double speed,
-                        double xMaxPosition, double yMaxPosition, CanvasWindow canvas) {
+        double xMaxPosition, double yMaxPosition, CanvasWindow canvas) {
 
         super(x, y, width, height);
 
@@ -65,13 +65,13 @@ public class CannonBubble extends Ellipse {
     }
 
     /**
-     * Update the position of the cannon bubble with the period dt.  
+     * Update the position of the cannon bubble with the period dt.
      * 
-     * Change the speed of the cannon bubble when it hits the walls. 
+     * Change the speed of the cannon bubble when it hits the walls.
      * 
-     * @param dt the time period to update the position of the cannon bubble
+     * @param dt      the time period to update the position of the cannon bubble
      * @param bubbles the cannon bubble whose position will be changed
-     * @param canvas the canvas where the cannon bubble is
+     * @param canvas  the canvas where the cannon bubble is
      */
     public void updatePosition(double dt, GraphicsGroup bubbles, CanvasWindow canvas) {
         double updateXPosition;
@@ -120,14 +120,15 @@ public class CannonBubble extends Ellipse {
 
     /**
      * Test whether the cannon bubble hits the bubbles
+     * 
      * @param bubbles the cannon bubble which is tested
-     * @param canvas the canvas where the cannon bubble at
+     * @param canvas  the canvas where the cannon bubble at
      * @return whether the cannon bubble hits bubbles
      */
     public boolean testHit(GraphicsGroup bubbles, CanvasWindow canvas) {
         for (int i = 0; i < 360; i++) {
             if (bubbles.getElementAt((xPosition + 15) + 15.1 * Math.cos(i * Math.PI / 180),
-                (yPosition + 15) + 15.1 * Math.sin(i * Math.PI / 180) + 0.01) != null || yPosition<=15) {
+                (yPosition + 15) + 15.1 * Math.sin(i * Math.PI / 180) + 0.01) != null || yPosition <= 15) {
                 xVelocity = 0;
                 yVelocity = 0;
                 canvas.remove(this);
@@ -181,6 +182,7 @@ public class CannonBubble extends Ellipse {
 
     /**
      * Find the neighbour bubbles of the cannon bubble.
+     * 
      * @param canvas the canvas where the cannon bubble at
      * @return the set of the neighbour bubbles of the cannon bubble
      */
@@ -225,6 +227,7 @@ public class CannonBubble extends Ellipse {
 
     /**
      * Set the initial degree of the cannon bubble.
+     * 
      * @param point the point where the mouse it at
      * @return the degree created by the point
      */
@@ -236,6 +239,7 @@ public class CannonBubble extends Ellipse {
 
     /**
      * Set the initial velocity of the cannon bubble.
+     * 
      * @param degree the initial degree of the cannon bubble
      */
     private void setVelocity(double degree) {
