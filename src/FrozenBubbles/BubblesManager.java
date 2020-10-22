@@ -6,11 +6,11 @@
  * more than three bubbles with the same color of the cannon bubble, all the connected bubble with the same color
  * will be destroyed. Then, if there are bubbles not connected to the wall, they will also be destroyed.
  * 
- * Edited by Scott Zong, Zefan Qian, Yiyang Shi.
+ * Edited by Scott Zong, Zefan Qian.
  * 
  * We thank Professor Paul Cantrell for helping us finishing the algorithm destroying the floating bubbles.
 */
-package frozenBubbles;
+package FrozenBubbles;
 
 import java.util.ArrayList;
 import java.util.Collections;

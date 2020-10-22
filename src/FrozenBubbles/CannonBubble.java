@@ -9,9 +9,9 @@
  * the cannon bubble hits the walls or the bubbles. The update of the position will be influenced after the 
  * cannon bubble hits the walls or the bubbles.
  * 
- * Edted by Zefan Qian, Scott Zong, Yiyang Shi
+ * Edted by Zefan Qian, Scott Zong.
  */
-package frozenBubbles;
+package FrozenBubbles;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;

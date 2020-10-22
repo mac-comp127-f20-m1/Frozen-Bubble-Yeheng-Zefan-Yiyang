@@ -3,9 +3,9 @@
  * 
  * The Bubble class extends the Ellipse, so it can be treated as a GraphicsObject, specifically Ellipse, on the canvas.
  * 
- * Edited by Scott Zong, Zefan Qian, Yiyang Shi.
+ * Edited by Scott Zong, Zefan Qian.
  */
-package frozenBubbles;
+package FrozenBubbles;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;

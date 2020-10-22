@@ -1,9 +1,9 @@
 /**
  * Create a cannon with input coordinates.
  * 
- * Edited by Zefan Qian, Scott Zong, Yiyang Shi.
+ * Edited by Zefan Qian.
  */
-package frozenBubbles;
+package FrozenBubbles;
 
 import edu.macalester.graphics.Path;
 import edu.macalester.graphics.Point;

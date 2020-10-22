@@ -7,11 +7,11 @@
  * interaction of the bubble and the cannon bubble based on the algorithm in the BubbleManager. Then,
  * the class will create a new cannonbubble to repeat the process above.
  * 
- * Edited by Scott Zong, Zefan Qian, Yiyang Shi
+ * Edited by Scott Zong, Zefan Qian.
  * 
  * We thank Professor Paul Cantrell for helping us with the approriate use of OnClick()
  */
-package frozenBubbles;
+package FrozenBubbles;
 
 import java.awt.Color;
 
@@ -59,7 +59,7 @@ public class FrozenBubblesGame {
      */
     private void run() {
         addObjects(); 
-        canvas.onClick(event -> {setBoolean(); processGame1(); addObjects(); });
+        canvas.onClick(event -> {setBoolean(); processGame(); addObjects(); });
     }
 
     /**
@@ -76,7 +76,7 @@ public class FrozenBubblesGame {
      * This method will constantly update the position of the cannon bubble and deal
      * with the interaction between the cannon bubble and the bubbles.
      */
-    private void processGame1() {
+    private void processGame() {
         if (startBallMoving) {
             canvas.animate(() -> {
                 if (!cannonBubble.testHit(manager.getGraphicsGroup(),canvas)) {
@@ -85,11 +85,10 @@ public class FrozenBubblesGame {
                 
                 else{   
                     manager.correctCannonBubble(cannonBubble);
-
+                    canvas.remove(cannonBubble);
+                    
                     Bubble newBubble = new Bubble(cannonBubble.getX(), cannonBubble.getY(), cannonBubble.getWidth(),
                     cannonBubble.getHeight(), cannonBubble.getColor());
-
-                    canvas.remove(cannonBubble);
                     manager.addBubble(newBubble);
                     manager.addBubbleToList(newBubble);
                     manager.destroyBubbles(newBubble);
